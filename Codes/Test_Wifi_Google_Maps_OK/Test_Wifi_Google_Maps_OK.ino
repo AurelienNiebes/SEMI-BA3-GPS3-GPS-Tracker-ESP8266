@@ -131,6 +131,14 @@ void loop()
     s += "+";
     s += LongitudeString;
     s += """ target=""_top"">Click here</a> to open the location in Google Maps.</p>";
+
+    s += "<p align=center><a style=""color:RED;font-size:125%;"" href=""http://earth.google.com/web/@";
+    s += LatitudeString;
+    s += ",";
+    s += LongitudeString;
+    s += ",";
+    s += "6500d";//Altitude par défaut ?
+    s += """ target=""_top"">Click here</a> to open the location in Google Earth.</p>";
   }
 
   s += "</body> </html> \n";
