@@ -46,6 +46,11 @@ void loop()
         Longitude = gps.location.lng();
         LongitudeString = String(Longitude , 6);
       }
+      else // En attendant les données
+      {
+        LatitudeString = "Veuillez patienter";
+        LongitudeString = "Veuillez patienter";
+      }
 
       if (gps.date.isValid())
       {
@@ -73,7 +78,7 @@ void loop()
       if (gps.time.isValid())
       {
         TimeString = "";
-        hour = gps.time.hour()+ 1; //adjust UTC
+        hour = gps.time.hour()+ 1; //adjust UTC (par rapport au méridien)
         minute = gps.time.minute();
         second = gps.time.second();
     
@@ -100,7 +105,7 @@ void loop()
   }
 
   //Response
-  String s = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n <!DOCTYPE html> <html> <head> <title>NEO-6M GPS Readings</title> <style>";
+  String s = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r\n\r\n <!DOCTYPE html> <html> <head> <meta http-equiv=""refresh"" content=\"5\" /> <title>NEO-6M GPS Readings</title> <style>"; //rafraichissement automatique de la page toutes les 5 secondes
   s += "table, th, td {border: 1px solid blue;} </style> </head> <body> <h1  style=";
   s += "font-size:300%;";
   s += " ALIGN=CENTER>NEO-6M GPS Readings</h1>";
