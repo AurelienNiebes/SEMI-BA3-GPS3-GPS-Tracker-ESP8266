@@ -1,3 +1,4 @@
+
 #include <TinyGPS++.h>
 #include <SoftwareSerial.h>
 #include <ESP8266WiFi.h>
@@ -12,8 +13,18 @@ float Latitude , Longitude;
 int year , month , date, hour , minute , second;
 String DateString , TimeString , LatitudeString , LongitudeString;
 
-
+// Set web srver port number to 80
 WiFiServer server(80);
+
+// Set your Static IP address
+IPAddress local_IP(192, 168, 1, 184); //correspond à l'adresse IP 192.168.43.159
+// Set your Gateway IP address
+IPAddress gateway(192, 168, 43, 123);
+
+IPAddress subnet(255, 255, 255, 0);
+IPAddress primaryDNS(8, 8, 8, 8);   //optional
+IPAddress secondaryDNS(8, 8, 4, 4); //optional
+
 void setup()
 {
   Serial.begin(9600);
@@ -21,6 +32,12 @@ void setup()
   Serial.println();
   Serial.print("Connecting");
   WiFi.begin(ssid, password);
+
+  // Configures static IP address
+  if (!WiFi.config(local_IP, gateway, subnet, primaryDNS, secondaryDNS)) {
+    Serial.println("STA Failed to configure");
+  }
+  
   while (WiFi.status() != WL_CONNECTED)
   {
     delay(500);
@@ -32,8 +49,10 @@ void setup()
   server.begin();
   Serial.println("Server started");
   Serial.println("IP address: ");
-  Serial.println(WiFi.localIP());
+  Serial.println(WiFi.localIP()); //192.168.43.159
+
 }
+
 
 void loop()
 {
@@ -146,5 +165,4 @@ void loop()
 
   client.print(s);
   delay(100);
-
 }
