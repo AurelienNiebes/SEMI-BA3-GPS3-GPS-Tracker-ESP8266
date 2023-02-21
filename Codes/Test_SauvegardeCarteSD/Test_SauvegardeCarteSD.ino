@@ -1,33 +1,40 @@
-#include "SD.h" //used for the microSD card functionality
+#include <SD.h> //used for the microSD card functionality
 #include <SPI.h> //using SPI communication protocol between the Arduino Uno board and the microSD card module
 #include <TinyGPS++.h>
 #include <SoftwareSerial.h> 
 
 File myFile; //to write GPS data to our .txt file in the microSD card
-int RXPin = 01;
-int TXPin = 03;
+int RXPin = 04;
+int TXPin = 05;
+const int chipSelect = 15;
 
 TinyGPSPlus gps;
 SoftwareSerial SerialGPS(RXPin, TXPin);
 
 String Latitude, Longitude, Altitude, day, month, year, hour, minute, second, Date, Time, Data;
-
+ 
 void setup() {
+  // Open serial communications and wait for port to open:
   Serial.begin(9600);
-    while (!Serial) {
-    ; 
+  while (!Serial) {
+    ; // wait for serial port to connect. Needed for native USB port only
   }
+ 
 
 
   Serial.print("Initializing SD card...");
 
-  if (!SD.begin(15)) //it will start the SPI communication using the default SPI CS pin that is GPIO15
-    Serial.println("initialization failed!");
+  if (!SD.begin(chipSelect)) //it will start the SPI communication using the default SPI CS pin that is GPIO15
+    Serial.println("initialization failed. Things to check:");
+    Serial.println("* is a card inserted?");
+    Serial.println("* is your wiring correct?");
+    Serial.println("* did you change the chipSelect pin to match your shield or module?");
     while (1);
   }
-  Serial.println("initialization done.");
+ else Serial.println("initialization done.");
   Serial.println("Creating GPS_data.txt...");
   myFile = SD.open("GPS_data.txt", FILE_WRITE); //open the GPS_data.txt file on the microSD card using SD.open() and will act as read/write. If the file does not exist, it will get created.
+ 
   if (myFile) {
     myFile.println( "Latitude, Longitude, Altitude, Date and Time \r\n");
     myFile.close();
