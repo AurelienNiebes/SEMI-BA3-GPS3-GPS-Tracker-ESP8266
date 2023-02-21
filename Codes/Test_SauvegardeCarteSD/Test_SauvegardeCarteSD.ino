@@ -4,8 +4,8 @@
 #include <SoftwareSerial.h> 
 
 File myFile; //to write GPS data to our .txt file in the microSD card
-int RXPin = 12;
-int TXPin = 14;
+int RXPin = 01;
+int TXPin = 03;
 
 TinyGPSPlus gps;
 SoftwareSerial SerialGPS(RXPin, TXPin);
@@ -21,8 +21,7 @@ void setup() {
 
   Serial.print("Initializing SD card...");
 
-  if (!SD.begin(10)) //it will start the SPI communication using the default SPI CS pin that is GPIO10 (SDD3)
-  {
+  if (!SD.begin(15)) //it will start the SPI communication using the default SPI CS pin that is GPIO15
     Serial.println("initialization failed!");
     while (1);
   }
