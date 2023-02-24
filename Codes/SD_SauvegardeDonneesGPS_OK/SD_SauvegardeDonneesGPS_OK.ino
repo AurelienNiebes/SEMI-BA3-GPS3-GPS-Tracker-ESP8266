@@ -25,7 +25,7 @@ void setup() {
 
   Serial.print("Initializing SD card...");
 
-  if (!SD.begin(chipSelect)) //it will start the SPI communication using the default SPI CS pin that is GPIO15
+  if (!SD.begin(chipSelect)){ //it will start the SPI communication using the default SPI CS pin that is GPIO15
     Serial.println("initialization failed. Things to check:");
     Serial.println("* is a card inserted?");
     Serial.println("* is your wiring correct?");
@@ -49,11 +49,13 @@ void setup() {
 }
 
 void loop() {
-  while (SerialGPS.available() > 0)
-    if (gps.encode(SerialGPS.read()))
+  while (SerialGPS.available() > 0){
+    if (gps.encode(SerialGPS.read())){
       obtain_data();
       WriteData();
-      delay(10000);
+      delay(5000);
+    }
+  }
   if (millis() > 5000 && gps.charsProcessed() < 10) //if there is no GPS data detected after 5s then the serial monitor will display “GPS NOT DETECTED!” message.
   {
     Serial.println("GPS NOT DETECTED!");
