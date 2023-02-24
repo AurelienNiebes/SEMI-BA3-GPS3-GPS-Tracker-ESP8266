@@ -2,7 +2,7 @@
 #include <SD.h>
 File myFile;
 String buffer;
-String filename = "GPS_data.txt";
+String filename = "GPS_data";
 const int chipSelect = 15;
 
 void setup() {
@@ -18,7 +18,9 @@ void setup() {
  	Serial.println("initialization done.");
 
  	//Read file line by line
+  
  	myFile = SD.open(filename + ".txt");
+  Serial.println(filename + ".txt :");
  	if (myFile) {
  			Serial.println("Read " + filename + ".txt line by line:");
  			while (myFile.available()) {
