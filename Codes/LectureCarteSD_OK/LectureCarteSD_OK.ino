@@ -24,6 +24,7 @@ void printFilenames(void ) { /* function printFilenames */
  	while (true) {
  			File entry = 	root.openNextFile();
  			if (! entry) {
+        Serial.println("no more file");
  					break;// no more files
  			}
  			Serial.println(entry.name());
