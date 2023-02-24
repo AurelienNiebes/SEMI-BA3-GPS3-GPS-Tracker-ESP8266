@@ -7,6 +7,7 @@ File myFile; //to write GPS data to our .txt file in the microSD card
 int RXPin = 04;
 int TXPin = 05;
 const int chipSelect = 15;
+String filename = "GPS_data.txt";
 
 TinyGPSPlus gps;
 SoftwareSerial SerialGPS(RXPin, TXPin);
@@ -33,7 +34,7 @@ void setup() {
   }
  else Serial.println("initialization done.");
   Serial.println("Creating GPS_data.txt...");
-  myFile = SD.open("GPS_data.txt", FILE_WRITE); //open the GPS_data.txt file on the microSD card using SD.open() and will act as read/write. If the file does not exist, it will get created.
+  myFile = SD.open(filename, FILE_WRITE); //open the GPS_data.txt file on the microSD card using SD.open() and will act as read/write. If the file does not exist, it will get created.
  
   if (myFile) {
     myFile.println( "Latitude, Longitude, Altitude, Date and Time \r\n");
