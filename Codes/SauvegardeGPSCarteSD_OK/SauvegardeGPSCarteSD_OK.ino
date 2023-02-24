@@ -37,7 +37,7 @@ void setup() {
   myFile = SD.open(filename, FILE_WRITE); //open the GPS_data.txt file on the microSD card using SD.open() and will act as read/write. If the file does not exist, it will get created.
  
   if (myFile) {
-    myFile.println( "Latitude, Longitude, Altitude, Date and Time \r\n");
+    myFile.println( "Latitude, Longitude, Altitude, Time \r\n");
     myFile.close();
 
   } 
@@ -73,6 +73,7 @@ void obtain_data()//gets the latitude, longitude, altitude, date and current tim
   else
   {
     Serial.println("Location is not available");
+    Latitude=Longitude=Altitude="";
   }
   
   if (gps.date.isValid())
@@ -80,17 +81,22 @@ void obtain_data()//gets the latitude, longitude, altitude, date and current tim
     month = gps.date.month();
     day = gps.date.day();
     year = gps.date.year();
-    Date = day + "-" + month + "-" + year;
+    Date = year + "-" + month + "-" + day;
      Serial.println(Date);
   }
   else
   {
     Serial.print("Date Not Available");
+    Date="";
   }
  
   Serial.print("Time: ");
   if (gps.time.isValid())
   {
+    Serial.println(gps.time.hour());
+    Serial.println(gps.time.minute());
+    Serial.println(gps.time.second());
+
     if (gps.time.hour() < 10) ;
     hour = gps.time.hour();
     if (gps.time.minute() < 10);
@@ -103,11 +109,12 @@ void obtain_data()//gets the latitude, longitude, altitude, date and current tim
   else
   {
     Serial.print("Time Not Available");
+    Time="";
   }
   
 }
 void WriteData(){
-  String Data = Latitude + "," + Longitude + "," + Altitude + "," + Date + "," + Time; //values are then linked together and saved in a string variable named ‘Data.’
+  String Data = Latitude + "," + Longitude + "," + Altitude + "," + Date + " " + Time; //values are then linked together and saved in a string variable named ‘Data.’
   Serial.println(Data);
   myFile = SD.open(filename, FILE_WRITE);
   
