@@ -9,10 +9,5 @@ void setup() {
 
 void loop() {
   while (SerialGPS.available() > 0)
-    Serial.print(SerialGPS.read());
-  if (millis() > 5000 && gps.charsProcessed() < 10) //if there is no GPS data detected after 5s then the serial monitor will display “GPS NOT DETECTED!” message.
-  {
-    Serial.println("GPS NOT DETECTED!");
-    while(true);
-  }
+    Serial.println(SerialGPS.read());
 }
