@@ -19,7 +19,7 @@ void setup() {
 
 //Delete files
 
- Serial.println("Removing" + filename + ".txt");
+ Serial.println("Removing " + filename + ".txt");
   SD.remove(filename + ".txt");
   
   if (SD.exists(filename + ".txt")) {

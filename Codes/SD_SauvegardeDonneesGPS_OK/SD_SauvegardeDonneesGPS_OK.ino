@@ -95,17 +95,28 @@ void obtain_data()//gets the latitude, longitude, altitude, date and current tim
   Serial.print("Time: ");
   if (gps.time.isValid())
   {
-    Serial.println(gps.time.hour());
+    Serial.println(gps.time.hour()+1);
     Serial.println(gps.time.minute());
     Serial.println(gps.time.second());
 
-    if (gps.time.hour() < 10) ;
-    hour = gps.time.hour();
-    if (gps.time.minute() < 10);
-    minute = gps.time.minute();
-    if (gps.time.second() < 10) ;
-    second = gps.time.second();
+    hour="";
+    minute="";
+    second="";
+    
+    if (gps.time.hour()+1 < 10) {
+    hour = '0';}
+    hour += String(gps.time.hour()+1) ;
+    
+    if (gps.time.minute() < 10){
+    minute = '0';}
+    minute += String(gps.time.minute());
+    
+    if (gps.time.second() < 10){
+    second  = '0';}
+    second += String(gps.time.second());
+    
     Time = hour + ":" + minute + ":" + second;
+    
   Serial.println(Time);
   }
   else
