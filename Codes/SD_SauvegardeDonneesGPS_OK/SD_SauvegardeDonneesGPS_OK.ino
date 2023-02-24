@@ -68,9 +68,9 @@ void obtain_data()//gets the latitude, longitude, altitude, date and current tim
 {
   if (gps.location.isValid())
   {
-    Latitude = gps.location.lat();
-    Longitude = gps.location.lng();
-    Altitude = gps.altitude.meters();
+    Latitude = String(gps.location.lat(),6);
+    Longitude = String(gps.location.lng(),6);
+    Altitude = String(gps.altitude.meters(),6);
   }
   else
   {
