@@ -12,7 +12,7 @@ String filename = "GPS_data.txt";
 TinyGPSPlus gps;
 SoftwareSerial SerialGPS(RXPin, TXPin);
 
-String Latitude, Longitude, Altitude, day, month, year, hour, minute, second, Date, Time, Data;
+String Latitude, Longitude, Altitude, day, month, year, hour, minute, second, Date, Time;
  
 void setup() {
   // Open serial communications and wait for port to open:
@@ -52,6 +52,8 @@ void loop() {
   while (SerialGPS.available() > 0)
     if (gps.encode(SerialGPS.read()))
       obtain_data();
+      WriteData();
+      delay(10000);
   if (millis() > 5000 && gps.charsProcessed() < 10) //if there is no GPS data detected after 5s then the serial monitor will display “GPS NOT DETECTED!” message.
   {
     Serial.println("GPS NOT DETECTED!");
@@ -103,9 +105,11 @@ void obtain_data()//gets the latitude, longitude, altitude, date and current tim
     Serial.print("Time Not Available");
   }
   
-  Data = Latitude + "," + Longitude + "," + Altitude + "," + Date + "," + Time; //values are then linked together and saved in a string variable named ‘Data.’
+}
+void WriteData(){
+  String Data = Latitude + "," + Longitude + "," + Altitude + "," + Date + "," + Time; //values are then linked together and saved in a string variable named ‘Data.’
   Serial.println(Data);
-  myFile = SD.open("GPS_data.txt", FILE_WRITE);
+  myFile = SD.open(filename, FILE_WRITE);
   
   if (myFile) {
     Serial.print("GPS logging to GPS_data.txt...");
@@ -116,5 +120,4 @@ void obtain_data()//gets the latitude, longitude, altitude, date and current tim
     Serial.println("error opening GPS_data.txt");
   } 
  Serial.println();
- delay(10000);
 }
