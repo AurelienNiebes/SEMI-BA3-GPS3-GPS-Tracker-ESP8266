@@ -3,16 +3,17 @@
 #include <TinyGPS++.h>
 #include <SoftwareSerial.h> 
 
-File myFile; //to write GPS data to our .txt file in the microSD card
-int RXPin = 04;
-int TXPin = 05;
-const int chipSelect = 15;
+const int RXPin = D2;
+const int TXPin = D1;
+const int chipSelect = D8;
 String filename = "GPS_data.txt";
 
+File myFile; //to write GPS data to our .txt file in the microSD card
 TinyGPSPlus gps;
 SoftwareSerial SerialGPS(RXPin, TXPin);
 
 String Latitude, Longitude, Altitude, day, month, year, hour, minute, second, Date, Time;
+bool CoordDispo =false;
  
 void setup() {
   // Open serial communications and wait for port to open:
@@ -52,7 +53,9 @@ void loop() {
   while (SerialGPS.available() > 0){
     if (gps.encode(SerialGPS.read())){
       obtain_data();
-      WriteData();
+      if(CoordDispo){
+        WriteData();      
+      }
       delay(5000);
     }
   }
@@ -66,38 +69,34 @@ void loop() {
 
 void obtain_data()//gets the latitude, longitude, altitude, date and current time for a valid location and saves them in their appropriate variables
 {
-  if (gps.location.isValid())
-  {
+  CoordDispo=gps.location.isValid();
+  if (CoordDispo){
     Latitude = String(gps.location.lat(),6);
     Longitude = String(gps.location.lng(),6);
     Altitude = String(gps.altitude.meters(),6);
   }
-  else
-  {
+  else{
     Serial.println("Location is not available");
     Latitude=Longitude=Altitude="";
   }
   
-  if (gps.date.isValid())
-  {
+  if (gps.date.isValid()){
     month = gps.date.month();
     day = gps.date.day();
     year = gps.date.year();
     Date = year + "-" + month + "-" + day;
-     Serial.println(Date);
+    Serial.print("Date: ");
+    Serial.println(Date);
   }
-  else
-  {
-    Serial.print("Date Not Available");
+  else{
+    Serial.println("Date Not Available");
     Date="";
   }
  
-  Serial.print("Time: ");
-  if (gps.time.isValid())
-  {
-    Serial.println(gps.time.hour()+1);
+  if (gps.time.isValid()){
+    /*Serial.println(gps.time.hour()+1);
     Serial.println(gps.time.minute());
-    Serial.println(gps.time.second());
+    Serial.println(gps.time.second());*/
 
     hour="";
     minute="";
@@ -116,23 +115,22 @@ void obtain_data()//gets the latitude, longitude, altitude, date and current tim
     second += String(gps.time.second());
     
     Time = hour + ":" + minute + ":" + second;
-    
-  Serial.println(Time);
+    Serial.print("Time: ");
+    Serial.println(Time);
   }
-  else
-  {
-    Serial.print("Time Not Available");
+  else{
+    Serial.println("Time Not Available");
     Time="";
   }
   
 }
 void WriteData(){
   String Data = Latitude + "," + Longitude + "," + Altitude + "," + Date + " " + Time; //values are then linked together and saved in a string variable named ‘Data.’
-  Serial.println(Data);
   myFile = SD.open(filename, FILE_WRITE);
   
   if (myFile) {
-    Serial.print("GPS logging to GPS_data.txt...");
+    Serial.println("GPS logging to GPS_data.txt...");
+    Serial.println(Data);
     myFile.println(Data); // pass the ‘Data’ variable inside it to be written on the .txt file
     myFile.close();
     Serial.println("done.");
