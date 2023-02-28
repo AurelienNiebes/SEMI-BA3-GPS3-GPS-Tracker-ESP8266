@@ -6,6 +6,8 @@
 const int RXPin = D2;
 const int TXPin = D1;
 const int chipSelect = D8;
+
+
 String filename = "GPS_data.txt";
 
 File myFile; //to write GPS data to our .txt file in the microSD card
@@ -33,20 +35,22 @@ void setup() {
     Serial.println("* did you change the chipSelect pin to match your shield or module?");
     while (1);
   }
- else Serial.println("initialization done.");
-  Serial.println("Creating GPS_data.txt...");
+  else Serial.println("initialization done.");
+
+  bool FileExisted=SD.exists(filename);
+  if (!FileExisted) {
+    Serial.println("Creating GPS_data.txt...");
+  }
   myFile = SD.open(filename, FILE_WRITE); //open the GPS_data.txt file on the microSD card using SD.open() and will act as read/write. If the file does not exist, it will get created.
  
-  if (myFile) {
+  if (myFile&&!FileExisted) {
     myFile.println( "Latitude, Longitude, Altitude, Time \r\n");
-    myFile.close();
-
   } 
   else {
     Serial.println("error opening GPS_data.txt");
   }
-  
- SerialGPS.begin(9600); //open the serial communication for the GPS port at a baud rate of 9600
+  myFile.close();
+  SerialGPS.begin(9600); //open the serial communication for the GPS port at a baud rate of 9600
 }
 
 void loop() {
@@ -132,10 +136,10 @@ void WriteData(){
     Serial.println("GPS logging to GPS_data.txt...");
     Serial.println(Data);
     myFile.println(Data); // pass the ‘Data’ variable inside it to be written on the .txt file
-    myFile.close();
     Serial.println("done.");
   } else {
     Serial.println("error opening GPS_data.txt");
-  } 
- Serial.println();
+  }
+  myFile.close(); 
+  Serial.println();
 }
