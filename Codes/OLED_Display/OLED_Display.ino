@@ -20,7 +20,6 @@ void setup() {
     for(;;);
   }
 
-
 // Clear the buffer
   display.clearDisplay();
   
