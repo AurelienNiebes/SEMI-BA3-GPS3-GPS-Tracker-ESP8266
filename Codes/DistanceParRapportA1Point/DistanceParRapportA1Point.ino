@@ -5,7 +5,7 @@
    It requires the use of SoftwareSerial, and assumes that you have a
    4800-baud serial GPS device hooked up on pins 4(rx) and 3(tx).
 */
-static const int RXPin = D2, TXPin = D1;
+static const int RXPin = D2, TXPin = D1; //D2 bleu et D1 vert
 static const uint32_t GPSBaud = 9600;
 
 // The TinyGPSPlus object
@@ -83,9 +83,10 @@ void loop()
       Serial.print(F(" degrees ["));
       Serial.print(TinyGPSPlus::cardinal(courseToTRESOR));
       Serial.println(F("]"));
-    }
 
-  
+      Serial.print(F("Vous chauffez"));
+      Serial.print(F("Vous vous éloignez"));
+    }
 
     if (gps.charsProcessed() < 10)
       Serial.println(F("WARNING: No GPS data.  Check wiring."));
