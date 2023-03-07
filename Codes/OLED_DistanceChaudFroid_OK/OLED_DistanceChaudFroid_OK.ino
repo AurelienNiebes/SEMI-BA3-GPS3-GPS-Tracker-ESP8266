@@ -1,11 +1,20 @@
+#include <SPI.h> //utile?
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
 #include <TinyGPSPlus.h>
 #include <SoftwareSerial.h>
-/*
-   This sample code demonstrates just about every built-in operation of TinyGPSPlus (TinyGPSPlus).
-   It requires the use of SoftwareSerial, and assumes that you have a
-   4800-baud serial GPS device hooked up on pins 4(rx) and 3(tx).
-*/
-static const int RXPin = D2, TXPin = D1; //D2 bleu et D1 vert
+
+
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+
+
+// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+
+
+static const int RXPin = D4, TXPin = D3; //D4 bleu et D3 vert
 static const uint32_t GPSBaud = 9600;
 
 // The TinyGPSPlus object
@@ -29,6 +38,19 @@ void setup()
   Serial.print(F("Testing TinyGPSPlus library v. ")); Serial.println(TinyGPSPlus::libraryVersion());
   Serial.println(F("by Mikal Hart"));
   Serial.println();
+
+
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
+    Serial.println(F("SSD1306 allocation failed"));
+    for(;;); 
+  }
+
+// Clear the buffer
+  delay(2000);
+  display.clearDisplay();
+
+  display.setTextSize(2);
+  display.setTextColor(WHITE);
 }
 
 void loop()
@@ -86,16 +108,27 @@ void loop()
       Serial.print(TinyGPSPlus::cardinal(courseToTRESOR));
       Serial.println(F("]"));
 
+      display.setCursor(0, 20);
+      
       if (distanceToTRESORtemp > distanceToTRESOR) {
             Serial.println(F("Vous chauffez"));
+            display.println("Vous chauffez");
+            display.display();
+            display.clearDisplay();
       }
       
       else if (distanceToTRESORtemp < distanceToTRESOR) {
-            Serial.println(F("Vous vous éloignez"));
+            Serial.println(F("Vous vous eloignez"));
+            display.println("Vous vous eloignez");
+            display.display(); 
+            display.clearDisplay();
           }
       
       else {
             Serial.println(F("Bougez svp"));
+            display.println("Bougez svp");
+            display.display(); 
+            display.clearDisplay();
           } 
           
       distanceToTRESORtemp = distanceToTRESOR;
