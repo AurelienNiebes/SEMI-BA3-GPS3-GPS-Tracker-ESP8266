@@ -27,7 +27,42 @@ SoftwareSerial ss(RXPin, TXPin);
 unsigned long last = 0UL;
 
 double courseToTRESORtemp = 0;
+static const double TRESOR_LAT = 50.45405, TRESOR_LON = 3.949944;  //Coordonnées du trésor(ici, le Beffroi de Mons)
 
+void DrawArrow(double orientation){//TODO: Tester
+  //Dessine une flèche(triangle) selon son orientation
+  //Fonctionne par arcs de cercle pour l'instant
+  //Changer si on trouve comment tourner les flèches librement
+
+  int NbreRegions=4;//Nombre d'arcs de cercle implémentés pour l'instant
+
+  int Grandeurs=360/NbreRegions;//Grandeur des arcs de cercle implémentés
+  switch((int)orientation / Grandeurs)
+      {
+      case 0:// 0 - 90(Pour l'instant)
+        // Draw triangle (vers le haut)
+        display.drawTriangle(50, 54, 78, 54, 64, 10, WHITE);
+        // Fill triangle
+        display.fillTriangle(50, 54, 78, 54, 64, 10, WHITE); 
+        break; 
+      case 1:
+      // Draw triangle (vers la droite)
+        display.drawTriangle(40, 45, 40, 19, 94, 32, WHITE);
+        // Fill triangle
+        display.fillTriangle(40, 45, 40, 19, 94, 32, WHITE);
+         break; // 10 - 19
+      case 2:
+        // Draw triangle (vers le bas)
+        display.drawTriangle(50, 10, 78, 10, 64, 54, WHITE);
+        // Fill triangle
+        display.fillTriangle(50, 10, 78, 10, 64, 54, WHITE);
+      case 3:
+        display.drawTriangle(40, 45, 40, 19, 94, 32, WHITE);
+        // Fill triangle
+        display.fillTriangle(40, 45, 40, 19, 94, 32, WHITE);
+
+      }
+}
 void setup()
 {
   Serial.begin(115200);
@@ -85,7 +120,6 @@ void loop()
   {
     Serial.println();
     if (gps.location.isValid()) {
-      static const double TRESOR_LAT = 50.4623627, TRESOR_LON = 4.0498483;
       double distanceToTRESOR =
         TinyGPSPlus::distanceBetween(
           gps.location.lat(),
@@ -130,56 +164,12 @@ double TinyGPSPlus::courseTo(double lat1, double long1, double lat2, double long
       Serial.print(TinyGPSPlus::cardinal(courseToTRESOR)); //NW, etc.
       Serial.println(F("]"));
 
-      display.setCursor(0, 20);
+       
+      display.clearDisplay();
+      DrawArrow(courseToTRESOR);//TODO: Tester
+      display.display();
       
-      if (cardinal(courseToTRESOR)) {
-        // Draw triangle (vers la droite)
-        display.clearDisplay();
-        display.drawTriangle(40, 45, 40, 19, 94, 32, WHITE);
-        // Fill triangle
-        display.fillTriangle(40, 45, 40, 19, 94, 32, WHITE);
-        display.display();
-        delay(5000);
-      }
-      
-      else if (cardinal(courseToTRESOR)) {
-        // Draw triangle (vers la gauche)
-        display.clearDisplay();
-        display.drawTriangle(88, 45, 88, 19, 34, 32, WHITE);
-        // Fill triangle
-        display.fillTriangle(88, 45, 88, 19, 34, 32, WHITE);
-        display.display();
-        delay(5000);
-      }
-          
-      else if (cardinal(courseToTRESOR)) {
-        // Draw triangle (vers le bas)
-        display.clearDisplay();
-        display.drawTriangle(50, 10, 78, 10, 64, 54, WHITE);
-        // Fill triangle
-        display.fillTriangle(50, 10, 78, 10, 64, 54, WHITE);
-        display.display();
-        delay(5000);
-      }
-
-      else if (cardinal(courseToTRESOR)) {
-        // Draw triangle (vers le haut)
-        display.clearDisplay();
-        display.drawTriangle(50, 54, 78, 54, 64, 10, WHITE);
-        // Fill triangle
-        display.fillTriangle(50, 54, 78, 54, 64, 10, WHITE);
-        display.display();
-        delay(5000);
-      }
-
-      else {
-            Serial.println(F("Bougez svp"));
-            display.println("Bougez svp");
-            display.display(); 
-            display.clearDisplay();
-          } 
-          
-      courseToTRESORtemp = courseToTRESOR;
+      //courseToTRESORtemp = courseToTRESOR; A quoi ça sert ?
 
       if (gps.charsProcessed() < 10)
         Serial.println(F("WARNING: No GPS data.  Check wiring."));
