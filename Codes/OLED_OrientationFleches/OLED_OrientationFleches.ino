@@ -16,7 +16,7 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 
 static const int RXPin = D4, TXPin = D3; //D4 bleu et D3 vert
 static const uint32_t GPSBaud = 9600;
-
+  
 // The TinyGPSPlus object
 TinyGPSPlus gps;
 
@@ -34,35 +34,42 @@ void DrawArrow(double orientation){//TODO: Tester
   //Fonctionne par arcs de cercle pour l'instant
   //Changer si on trouve comment tourner les flèches librement
 
-  int NbreRegions=4;//Nombre d'arcs de cercle implémentés pour l'instant
+  //int NbreRegions=4;//Nombre d'arcs de cercle implémentés pour l'instant
 
-  int Grandeurs=360/NbreRegions;//Grandeur des arcs de cercle implémentés
-  switch((int)orientation / Grandeurs)
+  //int Grandeurs=360/NbreRegions;//Grandeur des arcs de cercle implémentés
+  
+  switch((int)orientation)
       {
-      case 0:// 0 - 90(Pour l'instant)
+      case 0 ... 45:
+      case 315 ... 360:
         // Draw triangle (vers le haut)
         display.drawTriangle(50, 54, 78, 54, 64, 10, WHITE);
         // Fill triangle
         display.fillTriangle(50, 54, 78, 54, 64, 10, WHITE); 
         break; 
-      case 1:
+      case 46 ... 134:
       // Draw triangle (vers la droite)
         display.drawTriangle(40, 45, 40, 19, 94, 32, WHITE);
         // Fill triangle
         display.fillTriangle(40, 45, 40, 19, 94, 32, WHITE);
-         break; // 10 - 19
-      case 2:
+         break; 
+      case 135 ... 225:
         // Draw triangle (vers le bas)
         display.drawTriangle(50, 10, 78, 10, 64, 54, WHITE);
         // Fill triangle
         display.fillTriangle(50, 10, 78, 10, 64, 54, WHITE);
-      case 3:
-        display.drawTriangle(40, 45, 40, 19, 94, 32, WHITE);
+        break; 
+      case 226 ... 314:
+      // Draw triangle (vers la gauche)
+        display.drawTriangle(88, 45, 88, 19, 34, 32, WHITE);
         // Fill triangle
-        display.fillTriangle(40, 45, 40, 19, 94, 32, WHITE);
+        display.fillTriangle(88, 45, 88, 19, 34, 32, WHITE);
+        break; 
+      default: Serial.println(F("Erreur"));
 
       }
 }
+
 void setup()
 {
   Serial.begin(115200);
@@ -169,7 +176,6 @@ double TinyGPSPlus::courseTo(double lat1, double long1, double lat2, double long
       DrawArrow(courseToTRESOR);//TODO: Tester
       display.display();
       
-      //courseToTRESORtemp = courseToTRESOR; A quoi ça sert ?
 
       if (gps.charsProcessed() < 10)
         Serial.println(F("WARNING: No GPS data.  Check wiring."));

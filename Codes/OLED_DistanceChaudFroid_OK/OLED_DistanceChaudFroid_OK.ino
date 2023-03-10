@@ -104,7 +104,6 @@ void loop() {
       Serial.print(courseToTRESOR, 6);
       Serial.print(F(" degrees ["));
       Serial.print(TinyGPSPlus::cardinal(courseToTRESOR));  //returns course in degrees (North=0, West=270) from position 1 to position 2
-                                                            //
       Serial.println(F("]"));
 
       display.setCursor(0, 20);
