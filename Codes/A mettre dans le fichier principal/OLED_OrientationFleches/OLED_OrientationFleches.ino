@@ -29,14 +29,10 @@ unsigned long last = 0UL;
 double courseToTRESORtemp = 0;
 static const double TRESOR_LAT = 50.45405, TRESOR_LON = 3.949944;  //Coordonnées du trésor(ici, le Beffroi de Mons)
 
-void DrawArrow(double orientation){//TODO: Tester
-  //Dessine une flèche(triangle) selon son orientation
+void DrawArrow(double orientation){
+  //Dessine une flèche(triangle) selon son orientation en degrés de 0 à 360
   //Fonctionne par arcs de cercle pour l'instant
   //Changer si on trouve comment tourner les flèches librement
-
-  //int NbreRegions=4;//Nombre d'arcs de cercle implémentés pour l'instant
-
-  //int Grandeurs=360/NbreRegions;//Grandeur des arcs de cercle implémentés
   
   switch((int)orientation)
       {
@@ -150,28 +146,6 @@ void loop()
           gps.location.lng(),
           TRESOR_LAT, 
           TRESOR_LON);
-          
-/*
-double TinyGPSPlus::courseTo(double lat1, double long1, double lat2, double long2)
-{
-  // returns course in degrees (North=0, West=270) from position 1 to position 2,
-  // both specified as signed decimal-degrees latitude and longitude.
-  // Because Earth is no exact sphere, calculated course may be off by a tiny fraction.
-  // Courtesy of Maarten Lamers
-  double dlon = radians(long2-long1);
-  lat1 = radians(lat1);
-  lat2 = radians(lat2);
-  double a1 = sin(dlon) * cos(lat2);
-  double a2 = sin(lat1) * cos(lat2) * cos(dlon);
-  a2 = cos(lat1) * sin(lat2) - a2;
-  a2 = atan2(a1, a2);
-  if (a2 < 0.0)
-  {
-    a2 += TWO_PI;
-  }
-  return degrees(a2);
-}
-*/
 
       Serial.print(F("TRESOR     Distance="));
       Serial.print(distanceToTRESOR/1000, 6);
@@ -183,7 +157,7 @@ double TinyGPSPlus::courseTo(double lat1, double long1, double lat2, double long
 
        
       display.clearDisplay();
-      DrawArrow(courseToTRESOR);//TODO: Tester
+      DrawArrow(courseToTRESOR);
       display.display();
       
 
