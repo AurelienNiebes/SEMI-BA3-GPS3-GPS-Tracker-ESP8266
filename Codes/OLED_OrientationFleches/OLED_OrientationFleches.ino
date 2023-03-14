@@ -65,7 +65,7 @@ void DrawArrow(double orientation){//TODO: Tester
         // Fill triangle
         display.fillTriangle(88, 45, 88, 19, 34, 32, WHITE);
         break; 
-      default: Serial.println(F("Erreur"));
+      default: Serial.println(F("Erreur: Orientation non valide(>360?)"));
 
       }
 }
@@ -94,9 +94,19 @@ void setup()
   display.setTextSize(2);
   display.setTextColor(WHITE);
 }
-
+void test()
+{
+  for (double i=0; i<=360; i++) {
+    Serial.println(i);
+    display.clearDisplay();
+    DrawArrow(i);
+    display.display();
+    delay(30);
+  }
+}
 void loop()
 {
+  
   // Dispatch incoming characters
   while (ss.available() > 0)
     gps.encode(ss.read());

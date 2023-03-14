@@ -26,8 +26,10 @@ void setup() {
 // Logo
  // display.drawBitmap(0, 0, image_data_Saraarray, 128, 64, 1);
   // display.display();
+}
 
-// Draw triangle (vers la droite)
+void loop() {
+  // Draw triangle (vers la droite)
   display.clearDisplay();
   display.drawTriangle(40, 45, 40, 19, 94, 32, WHITE);
 // Fill triangle
@@ -59,8 +61,4 @@ void setup() {
   display.fillTriangle(50, 54, 78, 54, 64, 10, WHITE);
   display.display();
   delay(5000);
-}
-
-void loop() {
-  
 }
