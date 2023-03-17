@@ -1,0 +1,6 @@
+>>> Warning 204 "D:\Fichiers_Divers\DataPic\Fat32\MMC_SPI_FAT32.c" Line 355(1,1): Condition always FALSE
+>>> Warning 204 "D:\Fichiers_Divers\DataPic\Fat32\MMC_SPI_FAT32.c" Line 458(1,1): Condition always FALSE
+>>> Warning 204 "D:\Fichiers_Divers\DataPic\Fat32\MMC_SPI_FAT32.c" Line 520(1,1): Condition always FALSE
+>>> Warning 204 "D:\Fichiers_Divers\DataPic\Fat32\MMC_SPI_FAT32.c" Line 1231(1,1): Condition always FALSE
+      Memory usage:   ROM=52%      RAM=62% - 66%
+      0 Errors,  4 Warnings.

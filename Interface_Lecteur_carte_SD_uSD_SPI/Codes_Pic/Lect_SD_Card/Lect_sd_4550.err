@@ -1,0 +1,5 @@
+>>> Warning 202 "D:\Fichiers_Divers\DataPic\Include\HDD Driver.c" Line 91(5,13): Variable never used:   MMC_init
+>>> Warning 202 "D:\Fichiers_Divers\DataPic\Include\HDD Driver.c" Line 664(27,28): Variable never used:   j
+>>> Warning 202 "Lect_sd_4550.c" Line 27(7,12): Variable never used:   index
+      Memory usage:   ROM=26%      RAM=13% - 18%
+      0 Errors,  3 Warnings.

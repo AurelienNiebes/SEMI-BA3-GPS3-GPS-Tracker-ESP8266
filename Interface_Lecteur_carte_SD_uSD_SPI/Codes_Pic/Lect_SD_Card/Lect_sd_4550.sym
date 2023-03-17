@@ -1,0 +1,311 @@
+000     @SCRATCH
+001     @SCRATCH
+001     _RETURN_
+002     @SCRATCH
+003     @SCRATCH
+004     lcd_line
+005-006 cluster_size_bytes
+007-00A fat1_address
+00B-00E fat2_address
+00F-012 root_dir_address
+013-016 data_area_address
+017-01A winhex_adj
+01B-01E block_size
+01F     MMC_init
+020     MMC_dir_protected
+021-09A file
+09B     error
+09C     error0
+09D-09E rec_no
+09F-0A0 index
+0A1-0A2 rec_size
+0A3-0C2 fname
+0C3-0E3 buff0
+0E4-104 buff1
+105     @PRINTF_U_57600_31766_31767.P1
+105     cursor.c
+105-106 @PRINTF_LU_57600_31766_31767.P1
+105     file_read.fnbr
+105     init_MMC.max_tries
+105     beep.freq
+105     lcd_init.i
+105-108 @PRINTF_L32U_57600_31766_31767.P1
+105     open_file.fnbr
+105     initialisation.@SCRATCH1
+105     @PSTRINGC_92.@SCRATCH1
+105     test_carte.@SCRATCH1
+106     @PRINTF_U_57600_31766_31767.P1
+106-109 init_MMC.start_lsec
+106-107 open_file.fname
+106-107 file_read.buff
+106     beep.duree
+106     lcd_init.@SCRATCH1
+106     @PSTRINGC_92.@SCRATCH2
+106     test_carte.@SCRATCH2
+107     @DIV88.P1
+107     lcd_putc.c
+107     beep.@SCRATCH1
+107     @PRINTF_LU_57600_31766_31767.@SCRATCH1
+108-109 open_file.rec_length
+108     lcd_gotoxy.x
+108-10B file_read.address
+108     @DIV88.P1
+108     @PRINTF_LU_57600_31766_31767.@SCRATCH2
+109     lcd_gotoxy.y
+109     @DIV88.@SCRATCH1
+109     @PRINTF_LU_57600_31766_31767.@SCRATCH3
+109     @PRINTF_L32U_57600_31766_31767.@SCRATCH1
+10A-10B init_MMC.sec_resv
+10A-10D open_file.dir_addr_ptr
+10A     lcd_gotoxy.address
+10A     @PRINTF_LU_57600_31766_31767.@SCRATCH4
+10A     @PRINTF_L32U_57600_31766_31767.@SCRATCH2
+10B     lcd_gotoxy.@SCRATCH1
+10B     @PRINTF_LU_57600_31766_31767.@SCRATCH5
+10B     @PRINTF_L32U_57600_31766_31767.@SCRATCH3
+10C-10D init_MMC.sec_for_FAT
+10C     lcd_send_byte.address
+10C-10F file_read.nxt_cluster
+10C     @PRINTF_LU_57600_31766_31767.@SCRATCH6
+10C     @PRINTF_L32U_57600_31766_31767.@SCRATCH4
+10D     lcd_send_byte.n
+10D     @PRINTF_LU_57600_31766_31767.@SCRATCH7
+10D     @PRINTF_L32U_57600_31766_31767.@SCRATCH5
+10E-10F init_MMC.bytes_per_sector
+10E-10F open_file.bytes_read
+10E     lcd_send_byte.@SCRATCH1
+10E     @PRINTF_L32U_57600_31766_31767.@SCRATCH6
+10F     lcd_send_nibble.n
+10F     @PRINTF_L32U_57600_31766_31767.@SCRATCH7
+110-111 init_MMC.root_dir_entries
+110     open_file.i
+110     file_read.@SCRATCH1
+110     @PRINTF_L32U_57600_31766_31767.@SCRATCH8
+111-114 @DIV3232.P1
+111     open_file.ptr1
+111     file_read.@SCRATCH2
+112     open_file.ptr2
+112-113 init_MMC.sec_for_data
+112     file_read.@SCRATCH3
+113     open_file.lnf_tiles
+113     file_read.@SCRATCH4
+114     open_file.j
+114-115 init_MMC.count_of_clusters
+114     file_read.@SCRATCH5
+115-118 @DIV3232.P1
+115-120 open_file.file_name
+115     file_read.@SCRATCH6
+116-117 init_MMC.root_dir_sectors
+116     file_read.@SCRATCH7
+117     file_read.@SCRATCH8
+118-119 init_MMC.total_sectors
+119     @DIV3232.@SCRATCH1
+11A     init_MMC.i
+11A     @DIV3232.@SCRATCH2
+11B     init_MMC.tries
+11B     @DIV3232.@SCRATCH3
+11C     init_MMC.sec_per_cluster
+11C     @DIV3232.@SCRATCH4
+11D     init_MMC.c
+11D     @DIV3232.@SCRATCH5
+11E-13D init_MMC.buff
+121     open_file.attribute
+122     open_file.directory
+123     open_file.archive
+124     open_file.tmp
+125-144 open_file.buff
+13E     @delay_ms1.P1
+13E-13F @DIV1616.P2
+13E     init_MMC.@SCRATCH1
+13E     @PSTRINGC_57600_31766_31767.@SCRATCH1
+13F     init_MMC.@SCRATCH2
+13F     @PSTRINGC_57600_31766_31767.@SCRATCH2
+140-141 @MUL1616.P1
+140-141 @DIV1616.P2
+140     init_MMC.@SCRATCH3
+141     init_MMC.@SCRATCH4
+142-143 @MUL1616.P1
+142     @DIV1616.@SCRATCH1
+144     @MUL1616.@SCRATCH1
+145     open_file.level
+146     @PSTRINGCN_57600_31766_31767.P1
+146-147 strncmp.s1
+146     open_file.@SCRATCH1
+146     @PSTRINGR_57600_31766_31767.@SCRATCH1
+147     @PSTRINGCN_57600_31766_31767.@SCRATCH1
+147     open_file.@SCRATCH2
+147     @PSTRINGR_57600_31766_31767.@SCRATCH2
+148     cluster_addr.fnbr
+148-149 strncmp.s2
+148     @PSTRINGCN_57600_31766_31767.@SCRATCH2
+149     cluster_addr.mode
+14A     strncmp.n
+14A-14D cluster_addr.address
+14B     strncmp.@SCRATCH1
+14E-14F cluster_addr.buff
+150     cluster_addr.@SCRATCH1
+151     cluster_addr.@SCRATCH2
+152-155 set_BLOCKLEN.size
+152     cluster_addr.@SCRATCH3
+153     cluster_addr.@SCRATCH4
+154-157 read_BLOCK.address
+154     cluster_addr.@SCRATCH5
+155     cluster_addr.@SCRATCH6
+156     set_BLOCKLEN.r1
+156     cluster_addr.@SCRATCH7
+157     cluster_addr.@SCRATCH8
+158-159 read_BLOCK.buff
+158     cluster_addr.@SCRATCH9
+159     cluster_addr.@SCRATCH10
+15A-15D @MUL3232.P1
+15A     read_BLOCK.r1
+15B-15C read_BLOCK.i
+15D-15E read_BLOCK.iw
+15E-161 @MUL3232.P1
+15F     mmc_cmd.cmd
+15F     read_BLOCK.@SCRATCH1
+160-163 mmc_cmd.address
+160     read_BLOCK.@SCRATCH2
+162     @MUL3232.@SCRATCH1
+163     @MUL3232.@SCRATCH2
+164     mmc_cmd.tries
+164     @MUL3232.@SCRATCH3
+165     mmc_cmd.valid
+165     @MUL3232.@SCRATCH4
+166     mmc_cmd.invalid
+166     @MUL3232.@SCRATCH5
+167     mmc_cmd.i
+167     @MUL3232.@SCRATCH6
+168     mmc_cmd.r1
+169     mmc_cmd.@SCRATCH1
+F83     PSP_DATA
+FB4.6   C1OUT
+FB4.7   C2OUT
+FBB     CCP_2
+FBB     CCP_2_LOW
+FBC     CCP_2_HIGH
+FBE     CCP_1
+FBE     CCP_1_LOW
+FBF     CCP_1_HIGH
+FC6.4   CKP
+FC7.6   CKE
+FC7.7   SMP
+FE1-FE2 @WRITE_PACKED_MEMORY.P1
+FE1-FE2 @READ_PACKED_MEMORY.P2
+FE9-FEA @READ_PROGRAM_MEMORY.P1
+FE9-FEA @WRITE_PACKED_MEMORY.P2
+FE9-FEA @READ_PACKED_MEMORY.P3
+FE9-FEA @WRITE_PROGRAM_MEMORY.P4
+FF6-FF8 @WRITE_PROGRAM_MEMORY.P1
+FF6-FF8 @READ_PROGRAM_MEMORY.P2
+
+ROM Allocation:
+023A  @delay_ms1
+0004  LCD_INIT_STRING
+01B6  lcd_send_nibble
+01F8  lcd_send_byte
+0262  lcd_init
+02BA  lcd_gotoxy
+0306  @goto10131
+0328  lcd_putc
+03BE  cursor
+0416  @goto10155
+04F6  mmc_cmd
+058C  set_BLOCKLEN
+05E2  read_BLOCK
+0770  init_MMC
+0032  @const188
+04D4  @PSTRINGC_57600_31766_31767
+06AC  @MUL1616
+06CE  @MUL3232
+0728  @DIV1616
+0038  @const228
+0B40  @PSTRINGCN_57600_31766_31767
+0052  @const241
+006A  @const242
+0074  @const246
+0B90  cluster_addr
+1080  open_file
+008A  @const269
+0B6A  @PSTRINGR_57600_31766_31767
+17E4  file_read
+0FEE  strncmp
+0438  beep
+047A  initialisation
+00A8  @const297
+039E  @PSTRINGC_92
+00BC  @const299
+1EEA  test_carte
+00CC  @const301
+00F4  @const303
+011A  @const306
+0018  @const307
+0130  @const308
+168E  @DIV88
+16BA  @PRINTF_U_57600_31766_31767
+0150  @const315
+1738  @PRINTF_LU_57600_31766_31767
+017C  @const318
+019A  @const320
+1DA8  @DIV3232
+1E28  @PRINTF_L32U_57600_31766_31767
+2104  MAIN
+2104  @cinit
+02E5  done
+02E5  invalid
+0313  get_token
+0310  invalid
+032A  read_data
+03BA  cmd0
+0418  exit_cmd1
+0419  cmd1
+043D  ready
+0136  get_token
+0136  read_CID
+0136  get_token
+0136  read_CSD
+0136  next_block
+0136  send_token
+0136  invalid
+0877  read_directory
+094F  tile_decode
+0A38  next_tile
+0A90  match_found
+105F  mmc_exit
+
+
+User Memory space: 
+
+User Memory space: 
+
+Project Directory:
+    D:\Fichiers_Divers\DataPic\Lect_SD_Card\
+
+Project Files:
+    Lect_sd_4550.c
+    ..\Include\4550_sv3_scan.h
+    C:\Program Files (x86)\PICC\devices\18F4550.h
+    ..\Include\LCD420_S3.c
+    ..\Include\HDD Driver.c
+
+Units:
+    D:\Fichiers_Divers\DataPic\Lect_SD_Card\Lect_sd_4550 (main)
+
+Compiler Settings:
+    Processor:      PIC18F4550
+    Pointer Size:   16
+    ADC Range:      0-1023
+    Opt Level:      9
+    Short,Int,Long: UNSIGNED: 1,8,16
+    Float,Double:   32,32
+
+Output Files:
+    Errors:      Lect_sd_4550.err
+    Ext Symbols: Lect_sd_4550.esym
+    INHX32:      Lect_sd_4550.hex
+    Symbols:     Lect_sd_4550.sym
+    List:        Lect_sd_4550.lst
+    Debug/COFF:  Lect_sd_4550.cof
+    Project:     Lect_sd_4550.PJT
+    Call Tree:   Lect_sd_4550.tre
+    Statistics:  Lect_sd_4550.sta

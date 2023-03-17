@@ -1,0 +1,33 @@
+
+
+/> dir
+--/--
+
+/> help
+FAT Shell Help
+ del filename --- Deletes the file
+ make filename --- Creates an empty file
+ append filename string --- Appends string to the end of the file
+ cd dir --- Change the working directory
+ dir --- Shows the contents of the directory
+ cat filename --- Displays content of file
+ tail filename --- Displays the last 80 characters of file
+ mkdir dir --- Create a directory
+ rmdir dir --- Deletes the directory
+ format size --- Format card.  (Example: 'format 5524288' formats a 512MB card)
+ help	You are here
+
+ Put a parameter in quotes if it has spaces
+
+/> tail home.xtx
+Error opening file
+
+/> 
+
+/> tail home.txt
+Error opening file
+
+/> cat home.txt
+Error opening file
+
+/> 

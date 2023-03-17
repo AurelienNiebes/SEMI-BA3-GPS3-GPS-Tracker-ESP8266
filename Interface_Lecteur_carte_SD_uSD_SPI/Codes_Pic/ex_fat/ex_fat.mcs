@@ -1,0 +1,23 @@
+[Header]
+MagicCookie={0b13fe8c-dfe0-40eb-8900-6712719559a7}
+Version=1.0
+[File000]
+Location=ex_fat.ESYM
+Folder=Intermediary
+[File001]
+Location=D:\Fichiers_Divers\DataPic\ex_fat\ex_fat.o
+Folder=Intermediary
+[File002]
+Location=ex_fat.HEX
+Folder=Output
+[File003]
+Location=ex_fat.LST
+Folder=Output
+[File004]
+Location=ex_fat.ERR
+Folder=Output
+[File005]
+Location=ex_fat.COF
+Folder=Output
+[TOOL_LOC_STAMPS]
+tool_loc{0C155615-B197-4A4B-AEB6-343BB3F41A35}=C:\Program Files (x86)\PICC\Ccsc.exe
