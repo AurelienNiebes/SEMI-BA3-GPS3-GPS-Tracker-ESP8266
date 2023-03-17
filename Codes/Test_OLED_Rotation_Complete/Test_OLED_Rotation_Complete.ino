@@ -141,10 +141,9 @@ void loop() {
   for (int angle = 0; angle < 360; angle++) {
     display.clearDisplay(); // Clear the display buffer
 
-    drawRotatedBitmap(64, 32, epd_bitmap_Fleche, angle);
+    drawRotatedBitmap(0, 0, epd_bitmap_Fleche, angle);
     //drawRotatedBitmap(64, 16, adafruit, angle);
-    //drawRotatedBitmap(108, 16, bmp5x5, angle);
-
+    //drawRotatedBitmap(1, 1, bmp5x5, angle);
     display.display();     // Now update the display with the buffer
     //delay(100); // Pause so we see it
   }
@@ -152,21 +151,22 @@ void loop() {
 }
 
 void drawRotatedBitmap(int16_t x, int16_t y, const uint8_t *bitmap, uint16_t angle) {
-
-  uint8_t w = pgm_read_byte(bitmap++);//Lit le premier nombre de bitmap(la largeur)
-  uint8_t h = pgm_read_byte(bitmap++);
+  //x, y: Les coordonées du centre de l'image ?
+  uint8_t w = pgm_read_byte(bitmap++);//Lit le premier nombre du bitmap(la largeur)
+  uint8_t h = pgm_read_byte(bitmap++);//Lit le second nombre du bitmap(la largeur)
 
   int16_t newx, newy;
   uint8_t data = 0;
 
   float  cosa = cos(angle * DEG2RAD), sina = sin(angle * DEG2RAD);
 
+  //Coordonnées après la rotation du bord le plus proche de l'origine de l'image
   x = x - ((w * cosa / 2) - (h * sina / 2));
   y = y - ((h * cosa / 2) + (w * sina / 2));
 
   for (int16_t j = 0; j < h; j++) {
     for (int16_t i = 0; i < w; i++ ) {
-      if ((j * w + i) & 7) data <<= 1;
+      if ((j * w + i) & 7) data <<= 1;//data shifté vers la gauche de 1
       else      data   = pgm_read_byte(bitmap++);
 
       newx = 0.5 + x + ((i * cosa) - (j * sina));
