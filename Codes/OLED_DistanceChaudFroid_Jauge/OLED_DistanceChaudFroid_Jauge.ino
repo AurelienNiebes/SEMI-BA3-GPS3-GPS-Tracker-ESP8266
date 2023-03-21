@@ -107,34 +107,28 @@ void loop() {
       Serial.println(F("]"));
 
       display.setCursor(0, 50);
-
+      display.clearDisplay();
       //règle de 3 : map()
-
+      int h = map(distanceToTRESOR, 0, 4, SCREEN_HEIGHT, 0);
       if (distanceToTRESORtemp > distanceToTRESOR) {
         Serial.println(F("Vous chauffez"));
         display.println("Vous chauffez");
-        display.drawRect(10, 10, 50, 30, WHITE);
-        display.fillRect(30, 10, 50, 30, WHITE); //rectangle à remplir selon la distance
-        display.display();
-        display.clearDisplay();
+        display.drawRect(10, h, 30, SCREEN_HEIGHT, WHITE);
+        display.fillRect(30, h, 30, SCREEN_HEIGHT, WHITE); //rectangle à remplir selon la distance
       }
       else if (distanceToTRESORtemp < distanceToTRESOR) {
         Serial.println(F("Vous vous éloignez"));
         display.println("Vous vous eloignez");
-        display.drawRect(10, 10, 50, 30, WHITE);
-        display.fillRect(30, 10, 50, 30, WHITE); //rectangle à remplir selon la distance
-        display.display();
-        display.clearDisplay();
+        display.drawRect(10, h, 50, SCREEN_HEIGHT, WHITE);
+        display.fillRect(30, h, 50, SCREEN_HEIGHT, WHITE); //rectangle à remplir selon la distance
       }
       else {
         Serial.println(F("Bougez svp"));
         display.println("Bougez svp");
-        display.drawRect(10, 10, 50, 30, WHITE);
-        display.fillRect(30, 10, 50, 30, WHITE); //rectangle à remplir selon la distance
-        display.display();
-        display.clearDisplay();
+        display.drawRect(10, h, 50, SCREEN_HEIGHT, WHITE);
+        display.fillRect(30, h, 50, SCREEN_HEIGHT, WHITE); //rectangle à remplir selon la distance
       }
-
+      display.display();
       distanceToTRESORtemp = distanceToTRESOR;
 
       if (gps.charsProcessed() < 10)
