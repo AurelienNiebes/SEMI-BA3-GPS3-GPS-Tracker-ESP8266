@@ -9,7 +9,7 @@
 #include <TinyGPS++.h>
 #include <SoftwareSerial.h>
 
-const int RXPin = 12, TXPin = 14;   // GGIO12 - D6 / GPIO14 - D5
+const int RXPin = D4, TXPin = D3;   //D4 bleu et D3 vert
 const uint32_t GPSBaud = 9600; //Default baud of NEO-6M is 9600 ! Notre modèle a un baudrate de 9600
 
 

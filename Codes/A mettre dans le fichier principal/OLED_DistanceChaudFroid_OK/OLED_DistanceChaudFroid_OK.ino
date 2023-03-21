@@ -14,9 +14,9 @@
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 
 
-static const int RXPin = D4, TXPin = D3;  //D4 bleu et D3 vert
-static const uint32_t SerialBaud = 115200;
-static const uint32_t GPSBaud = 9600;
+const int RXPin = D4, TXPin = D3;  //D4 bleu et D3 vert
+const uint32_t SerialBaud = 115200;
+const uint32_t GPSBaud = 9600;
 
 // The TinyGPSPlus object
 TinyGPSPlus gps;

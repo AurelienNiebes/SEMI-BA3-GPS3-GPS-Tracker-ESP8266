@@ -67,7 +67,7 @@ const static uint8_t PROGMEM flechebmp[] =
   B00001111, B00000000,
   B00000011, B00000000
 };
-const static uint8_t PROGMEM epd_bitmap_Fleche [] = {
+const PROGMEM static uint8_t epd_bitmap_Fleche [] = {
   40, 56,
 	0x00, 0x00, 0x18, 0x00, 0x00, 0x00, 0x00, 0x3c, 0x00, 0x00, 0x00, 0x00, 0x7e, 0x00, 0x00, 0x00, 
 	0x00, 0xff, 0x00, 0x00, 0x00, 0x00, 0xff, 0x00, 0x00, 0x00, 0x01, 0xff, 0x80, 0x00, 0x00, 0x03, 
@@ -131,7 +131,7 @@ void setup()   {
   // by default, we'll generate the high voltage from the 3.3v line
   //display.begin(SSD1306_SWITCHCAPVCC);  // initialize
   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
-    Serial.println(F("SSD1306 allocation failed"));
+    Serial.println(F("SSD1306 allocation failed"));//Le F veut dire que le string est stockée dans la mémoire Flash
     for(;;);
   }
 }
@@ -160,19 +160,19 @@ void drawRotatedBitmap(int16_t x, int16_t y, const uint8_t *bitmap, uint16_t ang
 
   float  cosa = cos(angle * DEG2RAD), sina = sin(angle * DEG2RAD);
 
-  //Coordonnées après la rotation du bord le plus proche de l'origine de l'image
+  //Coordonnées après rotation du bord le plus proche de l'origine de l'image
   x = x - ((w * cosa / 2) - (h * sina / 2));
   y = y - ((h * cosa / 2) + (w * sina / 2));
 
   for (int16_t j = 0; j < h; j++) {
     for (int16_t i = 0; i < w; i++ ) {
-      if ((j * w + i) & 7) data <<= 1;//data shifté vers la gauche de 1
-      else      data   = pgm_read_byte(bitmap++);
+      if ((j * w + i) & 7) data <<= 1;//Data shifté vers la gauche de 1
+      else      data   = pgm_read_byte(bitmap++);//Tous les 8 pixels, data vaut l'octet suivant du bitmap
 
-      newx = 0.5 + x + ((i * cosa) - (j * sina));
+      newx = 0.5 + x + ((i * cosa) - (j * sina));//Pq le 0.5 ?
       newy = 0.5 + y + ((j * cosa) + (i * sina));
 
-      if (data & 0x80) display.drawPixel(newx, newy, 1);
+      if (data & 0x80) display.drawPixel(newx, newy, 1);//Si le bit le plus fort de data vaut 1, dessine un pixel
       //else            display.drawPixel(newx, newy, 0);
     }
   }
