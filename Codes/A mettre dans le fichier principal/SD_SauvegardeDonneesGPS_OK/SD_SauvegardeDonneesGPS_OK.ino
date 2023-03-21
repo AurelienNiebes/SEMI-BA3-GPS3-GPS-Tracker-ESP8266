@@ -16,16 +16,18 @@ SoftwareSerial SerialGPS(RXPin, TXPin);
 
 String Latitude, Longitude, Altitude, day, month, year, hour, minute, second, Date, Time;
 bool CoordDispo =false;
- 
+
+void Serial_init(int BaudRate){
+  Serial.begin(BaudRate);
+  while (!Serial) {
+  }
+  Serial.println("Communication serie initialisee");
+}
+
 void setup() {
   // Open serial communications and wait for port to open:
-  Serial.begin(9600);
-  while (!Serial) {
-    ; // wait for serial port to connect. Needed for native USB port only
-  }
+  Serial_init(BaudRate);
  
-
-
   Serial.print("Initializing SD card...");
 
   if (!SD.begin(chipSelect)){ //it will start the SPI communication using the default SPI CS pin that is GPIO15
@@ -39,15 +41,18 @@ void setup() {
 
   bool FileExisted=SD.exists(filename);
   if (!FileExisted) {
-    Serial.println("Creating GPS_data.txt...");
+    Serial.printf("Creating %s...",filename);
   }
   myFile = SD.open(filename, FILE_WRITE); //open the GPS_data.txt file on the microSD card using SD.open() and will act as read/write. If the file does not exist, it will get created.
  
-  if (myFile&&!FileExisted) {
-    myFile.println( "Latitude, Longitude, Altitude, Time \r\n");
+  if (myFile) {
+    if(!FileExisted){
+      Serial.println(F("Writing Header..."));
+      myFile.println( "Latitude, Longitude, Altitude, Time \r\n");
+    }
   } 
   else {
-    Serial.println("error opening GPS_data.txt");
+    Serial.println("error opening "+filename);
   }
   myFile.close();
   SerialGPS.begin(9600); //open the serial communication for the GPS port at a baud rate of 9600
