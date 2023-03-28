@@ -5,10 +5,17 @@
   #include <SD.h>  //used for the microSD card functionality
 
   #include <TinyGPSPlus.h>
+  struct WayPoint {
+    float latitude;
+    float longitude;
+    String nom;
+    String description;
+  };
+  
   void SD_Init(int chipSelect);
   void CreateFileWithHeader(String PathFileName, String Header);
   String GPSFormat(TinyGPSPlus gps);
   void WritePath(String Data, String PathFileName);
   //Lit le fichier avec les étapes pour récupérer la prochaine étape
-  String ReadWaypoints(String WaypointsFileName);
+  WayPoint ReadWaypoints(String WaypointsFileName);
 #endif

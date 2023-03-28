@@ -2,6 +2,7 @@
 #define GPS_ESP8266_CodePrincipal_H
 //LIBRAIRIES
 #include <Arduino.h>
+#include <list>
 //Librairies pour le Wifi
 #include <ESP8266WiFi.h>
 

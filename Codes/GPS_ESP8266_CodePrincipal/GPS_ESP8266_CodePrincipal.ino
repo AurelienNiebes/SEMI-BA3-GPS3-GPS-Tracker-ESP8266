@@ -11,6 +11,7 @@ const String PathFileName = "GPS_Path.txt";
 #define SCREEN_HEIGHT 64  // OLED display height, in pixels
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 TinyGPSPlus gps;
+std::list<WayPoint> Etapes;
 
 int choix = 3;  //switch
 void setup() {
@@ -21,6 +22,26 @@ void setup() {
 
   if(SD.exists(PathFileName)){
     CreateFileWithHeader(PathFileName, F("Latitude, Longitude, Altitude, Time"));
+  }
+
+  if(SD.exists(WaypointsFileName)){
+    File WaypointsFile = SD.open(WaypointsFileName, FILE_READ);
+    if(WaypointsFile){
+      String header = WaypointsFile.readStringUntil('\n');
+      Serial.println("Header:");
+      Serial.println(header);
+      Serial.println();
+      
+      if(header.equals("type	latitude	longitude	name	desc")){
+        Serial.println(F("Fichier d'étapes trouvé et valide"));
+      }
+      else{
+        Serial.println(F("Fichier d'étapes non valide"));
+      }
+    }
+    else{
+      Serial.println(F("Fichier d'étapes non trouvé"));
+    }
   }
 }
 

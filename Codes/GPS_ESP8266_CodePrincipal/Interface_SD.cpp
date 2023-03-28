@@ -102,28 +102,42 @@ void WritePath(String Data, String PathFileName) {
   PathFile.close();
   Serial.println();
 }
-String ReadWaypoints(String WaypointsFileName) {
+WayPoint ReadWaypoints(String WaypointsFileName) {
   //TODO: A compléter et tester
-  //Latitude, Longitude, Nom, (Description)
+  //type	latitude	longitude	name	desc
   static int offset = 0;
+  WayPoint Etape;
   File WaypointsFile = SD.open(WaypointsFileName, FILE_READ);  //Fichier avec les étapes à atteindre
-  String buffer;
   if (WaypointsFile) {
     Serial.println("Reading next line of " + WaypointsFileName);
     WaypointsFile.seek(offset);
     if (WaypointsFile.available()) {  //TODO: Vérifier si il n'y a aucun problème avec la dernière ligne
-      buffer = WaypointsFile.readStringUntil('\n');
-      Serial.println(buffer);
+      String type = WaypointsFile.readStringUntil('\t');
+      //A compléter...
+      if(type[0] == 'T'){
+        String latitude = WaypointsFile.readStringUntil('\t');
+        Etape.latitude=latitude.toFloat();
+        String longitude = WaypointsFile.readStringUntil('\t');
+        Etape.longitude = longitude.toFloat();
+        if(WaypointsFile.findUntil("\t","\n")){
+          String nom=WaypointsFile.readStringUntil('\t');
+          Etape.nom=nom;
+          String description = WaypointsFile.readStringUntil('\t');
+          Etape.description=description;
+        }
+      }
+      else{
+        Serial.println("Ligne malformé (position:" + offset);
+      }
+
       offset = WaypointsFile.position();
     } else {
       //TODO: indiquer que le fichier est vide
       Serial.println(F("Dernière étape atteinte !"));
-      buffer = "Fini";
     }
     WaypointsFile.close();
   } else {
     Serial.println("error opening " + WaypointsFileName);
-    buffer = "Erreur";
   }
-  return buffer;
+  return Etape;
 }
