@@ -109,26 +109,24 @@ void loop() {
       display.setCursor(0, 50);
       display.clearDisplay();
       //règle de 3 : map()
-      int h = map(distanceToTRESOR, 0, 4, SCREEN_HEIGHT, 0);
+      static int h = 1;map(distanceToTRESOR, 0, 4000, SCREEN_HEIGHT, 0); //4km distance max
+      Serial.println(h);
       if (distanceToTRESORtemp > distanceToTRESOR) {
         Serial.println(F("Vous chauffez"));
         display.println("Vous chauffez");
-        display.drawRect(10, h, 30, SCREEN_HEIGHT, WHITE);
-        display.fillRect(30, h, 30, SCREEN_HEIGHT, WHITE); //rectangle à remplir selon la distance
       }
       else if (distanceToTRESORtemp < distanceToTRESOR) {
         Serial.println(F("Vous vous éloignez"));
         display.println("Vous vous eloignez");
-        display.drawRect(10, h, 50, SCREEN_HEIGHT, WHITE);
-        display.fillRect(30, h, 50, SCREEN_HEIGHT, WHITE); //rectangle à remplir selon la distance
       }
       else {
         Serial.println(F("Bougez svp"));
         display.println("Bougez svp");
-        display.drawRect(10, h, 50, SCREEN_HEIGHT, WHITE);
-        display.fillRect(30, h, 50, SCREEN_HEIGHT, WHITE); //rectangle à remplir selon la distance
       }
+        display.drawRect(10, 0, 30, SCREEN_HEIGHT-25, WHITE);.
+        display.fillRect(10, h, 30, SCREEN_HEIGHT-25, WHITE); //rectangle à remplir selon la distance
       display.display();
+      h=h+10;
       distanceToTRESORtemp = distanceToTRESOR;
 
       if (gps.charsProcessed() < 10)
