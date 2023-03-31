@@ -123,8 +123,8 @@ void loop() {
         Serial.println(F("Bougez svp"));
         display.println("Bougez svp");
       }
-      display.drawRect(10, 0, 30, SCREEN_HEIGHT-25, WHITE);
-      display.fillRect(10, h, 30, SCREEN_HEIGHT-25, WHITE); //rectangle à remplir selon la distance
+      display.drawRect(64, 0, 30, SCREEN_HEIGHT-25, WHITE);
+      display.fillRect(64, 0, 30, h, WHITE); //rectangle à remplir selon la distance
       
       display.display();
       h=h+10;
