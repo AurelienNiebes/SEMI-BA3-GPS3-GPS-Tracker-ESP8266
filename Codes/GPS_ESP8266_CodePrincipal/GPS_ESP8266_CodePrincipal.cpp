@@ -24,7 +24,7 @@ void Wifi_Google_Maps() {
 // Sauvegarde données GPS
 TinyGPSPlus SD_SauvegardeDonneesGPS(TinyGPSPlus gps, String PathFileName) {
   gps=Obtain_GPS_Data(gps);
-  if (gps.time.isUpdated()) {//Le temps est la première donnée à être actualisée
+  if (gps.location.isUpdated()) {//Le temps est la première donnée à être actualisée
     SerialPrintUpdatedData(gps);
     WritePath(GPSFormat(gps), PathFileName);
   }
@@ -122,7 +122,7 @@ TinyGPSPlus OLED_OrientationFleches(TinyGPSPlus gps, Adafruit_SSD1306 display) {
   static double distanceToTRESORtemp = 0;
   gps=Obtain_GPS_Data(gps);
   if (gps.time.isUpdated()) {//Le temps est la première donnée à être actualisée
-    //SerialPrintUpdatedData(gps);
+    SerialPrintUpdatedData(gps);
   }
   if (millis() - last > 5000) {
     if (gps.location.isValid()) {

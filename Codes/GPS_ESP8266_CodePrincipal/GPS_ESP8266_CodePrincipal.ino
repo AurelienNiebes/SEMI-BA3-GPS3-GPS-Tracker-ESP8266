@@ -13,7 +13,7 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 TinyGPSPlus gps;
 std::list<WayPoint> Etapes;
 
-int choix = 7;  //switch
+int choix = 1;  //switch
 void setup() {
   Serial_init(SerialBaud);
   GPS_Init(GPSBaud);

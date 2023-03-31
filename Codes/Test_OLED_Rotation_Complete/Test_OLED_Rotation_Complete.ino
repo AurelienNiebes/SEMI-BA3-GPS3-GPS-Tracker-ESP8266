@@ -141,7 +141,7 @@ void loop() {
   for (int angle = 0; angle < 360; angle++) {
     display.clearDisplay(); // Clear the display buffer
 
-    drawRotatedBitmap(0, 0, epd_bitmap_Fleche, angle);
+    drawRotatedBitmap(64, 32, epd_bitmap_Fleche, angle);
     //drawRotatedBitmap(64, 16, adafruit, angle);
     //drawRotatedBitmap(1, 1, bmp5x5, angle);
     display.display();     // Now update the display with the buffer
