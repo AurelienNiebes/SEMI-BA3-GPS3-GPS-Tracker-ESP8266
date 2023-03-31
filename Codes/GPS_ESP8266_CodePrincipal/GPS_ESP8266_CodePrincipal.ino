@@ -13,7 +13,7 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 TinyGPSPlus gps;
 std::list<WayPoint> Etapes;
 
-int choix = 3;  //switch
+int choix = 7;  //switch
 void setup() {
   Serial_init(SerialBaud);
   GPS_Init(GPSBaud);
@@ -46,12 +46,14 @@ void setup() {
 }
 
 void loop() {
+  static int last=millis();
   if(Serial.available()){
     choix = Serial.read()-48;
+    Serial.println(choix);
   }
   switch (choix) {
     case 1:
-      GPS_Communication(gps);
+      gps=GPS_Communication(gps);
       break;
 
     case 2:
@@ -59,7 +61,7 @@ void loop() {
       break;
 
     case 3:
-      SD_SauvegardeDonneesGPS(gps, PathFileName);
+      gps=SD_SauvegardeDonneesGPS(gps, PathFileName);
       break;
 
     case 4:
@@ -71,13 +73,17 @@ void loop() {
       break;
 
     case 6:
-      OLED_DistanceChaudFroid(gps, display);
+      gps=OLED_DistanceChaudFroid(gps, display);
       break;
 
     case 7:
-      OLED_OrientationFleches(gps, display);
+      gps=OLED_OrientationFleches(gps, display);
       break;
 
-    default: Serial.println(F("Erreur: Choix inexistant"));
+    default:
+      if (millis() - last > 5000) {
+        Serial.println(F("Erreur: Choix inexistant"));
+        last=millis();
+      }
   }
 }

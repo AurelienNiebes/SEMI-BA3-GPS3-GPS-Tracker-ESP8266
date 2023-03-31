@@ -16,17 +16,17 @@ TinyGPSCustom VNordDirection(gps, "GPVTG", 1); // $GPVTG sentence, 1st element
 TinyGPSCustom MNordDirection(gps, "GPVTG", 3); // $GPVTG sentence, 3th element
 TinyGPSCustom VitKMH(gps, "GPVTG", 7); // $GPVTG sentence, 7th element
 int last=millis();
-bool Obtain_GPS_Data(TinyGPSPlus gps){
+TinyGPSPlus Obtain_GPS_Data(TinyGPSPlus gps){
   static int last=millis();
   while (SerialGPS.available() > 0){
-    return gps.encode(SerialGPS.read());
+    gps.encode(SerialGPS.read());
   }
   if ((last - millis()) > 5000 && gps.charsProcessed() < 10) //if there is no GPS data detected after 5s then the serial monitor will display “GPS NOT DETECTED!” message.
   {
     Serial.println(F("GPS NOT DETECTED!"));
     //while(true);
   }
-  return false;
+  return gps;
 }
 void GPS_Init(int GPSBaud){
   SerialGPS.begin(GPSBaud);
@@ -35,8 +35,8 @@ void GPS_Init(int GPSBaud){
 void setup() 
 {
   Serial.begin(115200);
-  //GPS_Init(GPSBaud);
-  SerialGPS.begin(GPSBaud);
+  GPS_Init(GPSBaud);
+  //SerialGPS.begin(GPSBaud);
   Serial.println(F("Test_GPS_Vitesse.ino"));
   Serial.print(F("Testing TinyGPSPlus library v. ")); Serial.println(TinyGPSPlus::libraryVersion());
   Serial.println(F("by Mikal Hart"));
@@ -45,11 +45,12 @@ void setup()
 
 void loop() 
 {
-  
+  gps=Obtain_GPS_Data(gps);
+
   // Every time anything is updated, print everything.
-  while (SerialGPS.available() > 0){
+  /*while (SerialGPS.available() > 0){
     gps.encode(SerialGPS.read());
-  }
+  }*/
   if (gps.location.isUpdated())
   {
     last=millis();
@@ -59,9 +60,9 @@ void loop()
     Serial.print(F(" VDirection=")); Serial.print(VNordDirection.value());
     Serial.print(F(" MDirection=")); Serial.println(MNordDirection.value());
   }
-    if ((last - millis()) > 5000 && gps.charsProcessed() < 10) //if there is no GPS data detected after 5s then the serial monitor will display “GPS NOT DETECTED!” message.
+  /*if ((last - millis()) > 5000 && gps.charsProcessed() < 10) //if there is no GPS data detected after 5s then the serial monitor will display “GPS NOT DETECTED!” message.
   {
     Serial.println(F("GPS NOT DETECTED!"));
     //while(true);
-  }
+  }*/
 }

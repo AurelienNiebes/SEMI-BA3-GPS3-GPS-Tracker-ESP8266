@@ -9,10 +9,12 @@ void Serial_init(int BaudRate) {
   Serial.println("Communication serie initialisee");
 }
 // Communication avec le GPS
-void GPS_Communication(TinyGPSPlus gps) {
-  if (Obtain_GPS_Data(gps)) {
+TinyGPSPlus GPS_Communication(TinyGPSPlus gps) {
+  gps=Obtain_GPS_Data(gps);
+  if (gps.time.isUpdated()) {//Le temps est la première donnée à être actualisée
     SerialPrintUpdatedData(gps);
   }
+  return gps;
 }
 
 // Google Maps
@@ -20,10 +22,13 @@ void Wifi_Google_Maps() {
 }
 
 // Sauvegarde données GPS
-void SD_SauvegardeDonneesGPS(TinyGPSPlus gps, String PathFileName) {
-  if (Obtain_GPS_Data(gps)) {
+TinyGPSPlus SD_SauvegardeDonneesGPS(TinyGPSPlus gps, String PathFileName) {
+  gps=Obtain_GPS_Data(gps);
+  if (gps.time.isUpdated()) {//Le temps est la première donnée à être actualisée
+    SerialPrintUpdatedData(gps);
     WritePath(GPSFormat(gps), PathFileName);
   }
+  return gps;
 }
 
 // Lecture des fichiers sur la carte SD
@@ -36,10 +41,11 @@ void SD_SuppressionFichiers() {
 
 const double TRESOR_LAT = 50.45405, TRESOR_LON = 3.949944;  //Coordonnées du trésor(ici, le Beffroi de Mons)
 // Chasse au trésor distance
-void OLED_DistanceChaudFroid(TinyGPSPlus gps, Adafruit_SSD1306 display) {
-  static int last;
+TinyGPSPlus OLED_DistanceChaudFroid(TinyGPSPlus gps, Adafruit_SSD1306 display) {
+  static int last=millis();
   static double distanceToTRESORtemp = 0;
-  if (Obtain_GPS_Data(gps)) {
+  gps=Obtain_GPS_Data(gps);
+  if (gps.time.isUpdated()) {//Le temps est la première donnée à être actualisée
     SerialPrintUpdatedData(gps);
   }
   if (millis() - last > 5000) {
@@ -86,6 +92,7 @@ void OLED_DistanceChaudFroid(TinyGPSPlus gps, Adafruit_SSD1306 display) {
       Serial.println();
     }
   }
+  return gps;
 }
 //Fleche vers le haut de 40 par 56 pixels
 const PROGMEM static uint8_t epd_bitmap_Fleche[] = {
@@ -110,11 +117,12 @@ const PROGMEM static uint8_t epd_bitmap_Fleche[] = {
   0xff, 0xfe, 0x00, 0x00, 0x3f, 0xff, 0xfc, 0x00
 };
 //Chasse au trésor orientation
-void OLED_OrientationFleches(TinyGPSPlus gps, Adafruit_SSD1306 display) {
-  static int last;
+TinyGPSPlus OLED_OrientationFleches(TinyGPSPlus gps, Adafruit_SSD1306 display) {
+  static int last=millis();
   static double distanceToTRESORtemp = 0;
-  if (Obtain_GPS_Data(gps)) {
-    SerialPrintUpdatedData(gps);
+  gps=Obtain_GPS_Data(gps);
+  if (gps.time.isUpdated()) {//Le temps est la première donnée à être actualisée
+    //SerialPrintUpdatedData(gps);
   }
   if (millis() - last > 5000) {
     if (gps.location.isValid()) {
@@ -149,4 +157,5 @@ void OLED_OrientationFleches(TinyGPSPlus gps, Adafruit_SSD1306 display) {
       Serial.println();
     }
   }
+  return gps;
 }
