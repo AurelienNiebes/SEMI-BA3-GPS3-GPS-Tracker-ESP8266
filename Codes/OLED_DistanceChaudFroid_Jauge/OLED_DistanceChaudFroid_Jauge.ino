@@ -30,6 +30,8 @@ unsigned long last = 0UL;
 double distanceToTRESORtemp = 0;
 static const double TRESOR_LAT = 50.45405, TRESOR_LON = 3.949944;  //Coordonnées du trésor(ici, le Beffroi de Mons)
 
+const int hmax = SCREEN_HEIGHT-25;//Hauteur du rectangle
+
 void setup() {
   Serial.begin(SerialBaud);
   ss.begin(GPSBaud);
@@ -81,7 +83,7 @@ void loop() {
     Serial.println(gps.altitude.meters());
   }
 
-  else if (millis() - last > 5000) {
+  else if (millis() - last > 1000) {
     if (gps.location.isValid()) {
       double distanceToTRESOR =
         TinyGPSPlus::distanceBetween(
@@ -108,8 +110,8 @@ void loop() {
       display.setCursor(0, 50);
       display.clearDisplay();
       //règle de 3 : map()
-      static int h = 1;
-      map(distanceToTRESOR, 0, 4000, SCREEN_HEIGHT, 0); //4km distance max
+      int h = map(distanceToTRESOR, 0, 4000, hmax, 0); //4km distance max
+      h = max(h, 0);
       Serial.println(h);
       if (distanceToTRESORtemp > distanceToTRESOR) {
         Serial.println(F("Vous chauffez"));
@@ -123,13 +125,10 @@ void loop() {
         Serial.println(F("Bougez svp"));
         display.println("Bougez svp");
       }
-      display.drawRect(64, 0, 30, SCREEN_HEIGHT-25, WHITE);
-      display.fillRect(64, 0, 30, h, WHITE); //rectangle à remplir selon la distance
-      
+      display.drawRect(49, 0, 30, hmax, WHITE);
+      display.fillRect(49,hmax-h, 30, h, WHITE); //rectangle à remplir selon la distance
       display.display();
-      h=h+10;
       distanceToTRESORtemp = distanceToTRESOR;
-
       
     }
     if (gps.charsProcessed() < 10)
