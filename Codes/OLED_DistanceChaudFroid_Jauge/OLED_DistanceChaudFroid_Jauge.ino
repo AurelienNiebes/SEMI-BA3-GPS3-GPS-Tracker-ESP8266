@@ -82,7 +82,6 @@ void loop() {
   }
 
   else if (millis() - last > 5000) {
-    Serial.println();
     if (gps.location.isValid()) {
       double distanceToTRESOR =
         TinyGPSPlus::distanceBetween(
@@ -109,7 +108,8 @@ void loop() {
       display.setCursor(0, 50);
       display.clearDisplay();
       //règle de 3 : map()
-      static int h = 1;map(distanceToTRESOR, 0, 4000, SCREEN_HEIGHT, 0); //4km distance max
+      static int h = 1;
+      map(distanceToTRESOR, 0, 4000, SCREEN_HEIGHT, 0); //4km distance max
       Serial.println(h);
       if (distanceToTRESORtemp > distanceToTRESOR) {
         Serial.println(F("Vous chauffez"));
@@ -123,17 +123,19 @@ void loop() {
         Serial.println(F("Bougez svp"));
         display.println("Bougez svp");
       }
-        display.drawRect(10, 0, 30, SCREEN_HEIGHT-25, WHITE);.
-        display.fillRect(10, h, 30, SCREEN_HEIGHT-25, WHITE); //rectangle à remplir selon la distance
+      display.drawRect(10, 0, 30, SCREEN_HEIGHT-25, WHITE);
+      display.fillRect(10, h, 30, SCREEN_HEIGHT-25, WHITE); //rectangle à remplir selon la distance
+      
       display.display();
       h=h+10;
       distanceToTRESORtemp = distanceToTRESOR;
 
-      if (gps.charsProcessed() < 10)
+      
+    }
+    if (gps.charsProcessed() < 10)
         Serial.println(F("WARNING: No GPS data.  Check wiring."));
 
-      last = millis();
-      Serial.println();
-    }
+    last = millis();
+    Serial.println();
   }
 }
