@@ -27,9 +27,9 @@ void SD_LectureFichiers();
 void SD_SuppressionFichiers();
 
 // Chasse au trésor distance
-TinyGPSPlus OLED_DistanceChaudFroid(TinyGPSPlus gps, Adafruit_SSD1306 display);
+TinyGPSPlus OLED_DistanceChaudFroid(TinyGPSPlus gps);
 
 //Chasse au trésor orientation
-TinyGPSPlus OLED_OrientationFleches(TinyGPSPlus gps, Adafruit_SSD1306 display);
+TinyGPSPlus OLED_OrientationFleches(TinyGPSPlus gps);
 
 #endif

@@ -41,28 +41,21 @@ void SD_SuppressionFichiers() {
 
 const double TRESOR_LAT = 50.45405, TRESOR_LON = 3.949944;  //Coordonnées du trésor(ici, le Beffroi de Mons)
 // Chasse au trésor distance
-TinyGPSPlus OLED_DistanceChaudFroid(TinyGPSPlus gps, Adafruit_SSD1306 display) {
+TinyGPSPlus OLED_DistanceChaudFroid(TinyGPSPlus gps) {
   static int last=millis();
-  static double distanceToTRESORtemp = 0;
   gps=Obtain_GPS_Data(gps);
   if (gps.time.isUpdated()) {//Le temps est la première donnée à être actualisée
     SerialPrintUpdatedData(gps);
   }
   if (millis() - last > 5000) {
     if (gps.location.isValid()) {
-      double distanceToTRESOR =
-        TinyGPSPlus::distanceBetween(
-          gps.location.lat(),
-          gps.location.lng(),
-          TRESOR_LAT,
-          TRESOR_LON);
+      double distanceToTRESOR = TinyGPSPlus::distanceBetween(
+          gps.location.lat(), gps.location.lng(),
+          TRESOR_LAT, TRESOR_LON);
 
-      double courseToTRESOR =
-        TinyGPSPlus::courseTo(
-          gps.location.lat(),
-          gps.location.lng(),
-          TRESOR_LAT,
-          TRESOR_LON);
+      double courseToTRESOR = TinyGPSPlus::courseTo(
+          gps.location.lat(), gps.location.lng(),
+          TRESOR_LAT, TRESOR_LON);
 
       Serial.print(F("TRESOR     Distance="));
       Serial.print(distanceToTRESOR / 1000, 6);
@@ -72,22 +65,10 @@ TinyGPSPlus OLED_DistanceChaudFroid(TinyGPSPlus gps, Adafruit_SSD1306 display) {
       Serial.print(TinyGPSPlus::cardinal(courseToTRESOR));  //returns course in degrees (North=0, West=270) from position 1 to position 2
       Serial.println(F("]"));
 
-      display.setCursor(0, 20);
-
-      if (distanceToTRESORtemp > distanceToTRESOR) {
-        Serial.println(F("Vous chauffez"));
-        display.println("Vous chauffez");
-      } else if (distanceToTRESORtemp < distanceToTRESOR) {
-        Serial.println(F("Vous vous éloignez"));
-        display.println("Vous vous eloignez");
-      } else {
-        Serial.println(F("Bougez svp"));
-        display.println("Bougez svp");
-      }
-      display.display();
-      display.clearDisplay();
-
-      distanceToTRESORtemp = distanceToTRESOR;
+      OLED_Clear();
+      OLED_PrintDistance(distanceToTRESOR);
+      OLED_Display();
+      
       last = millis();
       Serial.println();
     }
@@ -117,9 +98,8 @@ const PROGMEM static uint8_t epd_bitmap_Fleche[] = {
   0xff, 0xfe, 0x00, 0x00, 0x3f, 0xff, 0xfc, 0x00
 };
 //Chasse au trésor orientation
-TinyGPSPlus OLED_OrientationFleches(TinyGPSPlus gps, Adafruit_SSD1306 display) {
+TinyGPSPlus OLED_OrientationFleches(TinyGPSPlus gps) {
   static int last=millis();
-  static double distanceToTRESORtemp = 0;
   gps=Obtain_GPS_Data(gps);
   if (gps.time.isUpdated()) {//Le temps est la première donnée à être actualisée
     SerialPrintUpdatedData(gps);
@@ -149,9 +129,9 @@ TinyGPSPlus OLED_OrientationFleches(TinyGPSPlus gps, Adafruit_SSD1306 display) {
       Serial.println(F("]"));
 
       //Flèche tournante
-      display.clearDisplay();  // Clear the display buffer
-      drawRotatedBitmap(display, 80, 32, epd_bitmap_Fleche, (uint16_t)courseToTRESOR);
-      display.display();  // Now update the display with the buffer
+      OLED_Clear();  // Clear the display buffer
+      drawRotatedBitmap(80, 32, epd_bitmap_Fleche, (uint16_t)courseToTRESOR);
+      OLED_Display();  // Now update the display with the buffer
       
       last = millis();
       Serial.println();

@@ -7,9 +7,7 @@ const uint32_t GPSBaud = 9600;
 const String WaypointsFileName = "GPS_Waypoints.txt";
 const String PathFileName = "GPS_Path.txt";
 
-#define SCREEN_WIDTH 128  // OLED display width, in pixels
-#define SCREEN_HEIGHT 64  // OLED display height, in pixels
-Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+
 TinyGPSPlus gps;
 std::list<WayPoint> Etapes;
 
@@ -18,7 +16,7 @@ void setup() {
   Serial_init(SerialBaud);
   GPS_Init(GPSBaud);
   SD_Init(chipSelect);
-  OLED_Init(display);
+  OLED_Init();
 
   if(SD.exists(PathFileName)){
     CreateFileWithHeader(PathFileName, F("Latitude, Longitude, Altitude, Time"));
@@ -73,11 +71,11 @@ void loop() {
       break;
 
     case 6:
-      gps=OLED_DistanceChaudFroid(gps, display);
+      gps=OLED_DistanceChaudFroid(gps);
       break;
 
     case 7:
-      gps=OLED_OrientationFleches(gps, display);
+      gps=OLED_OrientationFleches(gps);
       break;
 
     default:
