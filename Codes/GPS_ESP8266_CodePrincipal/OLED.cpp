@@ -15,22 +15,34 @@ void OLED_Init() {
 }
 void OLED_Clear(){display.clearDisplay();}
 void OLED_Display(){display.display();}
-void OLED_PrintDistance(double distance) {
+void OLED_PrintDistance(int x, int y, double distance) {
   static double PrecDistance = -1;
   if (PrecDistance > 0) {
-    display.setCursor(0, 20);
+    display.setCursor(x, y);
     if (PrecDistance > distance) {
       Serial.println(F("Vous chauffez"));
-      display.println("Vous chauffez");
+      display.print("Vous chauffez");
     } else if (PrecDistance < distance) {
       Serial.println(F("Vous vous éloignez"));
-      display.println("Vous vous eloignez");
+      display.print("Vous vous eloignez");
     } else {
       Serial.println(F("Bougez svp"));
-      display.println("Bougez svp");
+      display.print("Bougez svp");
+      /*display.printf(const char *format, ...)
+      display.printf()*/
     }
   }
+  //Serial.println(PrecDistance);
   PrecDistance = distance;
+  //Serial.println(PrecDistance);
+}
+const int hmax=SCREEN_HEIGHT-25;
+void OLED_DrawJauge(double distance){
+  int h = map(distance, 0, 4000, hmax, 0); //4km distance max
+  h = max(h, 0);
+  display.drawRect(49, 0, 30, hmax, WHITE);
+  display.fillRect(49,hmax-h, 30, h, WHITE); //rectangle à remplir selon la distance
+  //Serial.println(h);
 }
 #define DEG2RAD 0.0174532925
 void drawRotatedBitmap(int16_t x, int16_t y, const uint8_t *bitmap, uint16_t angle) {

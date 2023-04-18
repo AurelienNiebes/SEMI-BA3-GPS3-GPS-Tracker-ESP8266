@@ -41,13 +41,13 @@ void SD_SuppressionFichiers() {
 
 const double TRESOR_LAT = 50.45405, TRESOR_LON = 3.949944;  //Coordonnées du trésor(ici, le Beffroi de Mons)
 // Chasse au trésor distance
-TinyGPSPlus OLED_DistanceChaudFroid(TinyGPSPlus gps) {
+TinyGPSPlus OLED_DistanceChaudFroid_Jauge(TinyGPSPlus gps) {
   static int last=millis();
   gps=Obtain_GPS_Data(gps);
-  if (gps.time.isUpdated()) {//Le temps est la première donnée à être actualisée
+  if (millis() - last > 3000) {
+    if (gps.time.isUpdated()) {//Le temps est la première donnée à être actualisée
     SerialPrintUpdatedData(gps);
-  }
-  if (millis() - last > 5000) {
+    }
     if (gps.location.isValid()) {
       double distanceToTRESOR = TinyGPSPlus::distanceBetween(
           gps.location.lat(), gps.location.lng(),
@@ -66,7 +66,8 @@ TinyGPSPlus OLED_DistanceChaudFroid(TinyGPSPlus gps) {
       Serial.println(F("]"));
 
       OLED_Clear();
-      OLED_PrintDistance(distanceToTRESOR);
+      OLED_PrintDistance(0,50,distanceToTRESOR);
+      OLED_DrawJauge(distanceToTRESOR);
       OLED_Display();
       
       last = millis();
@@ -101,11 +102,11 @@ const PROGMEM static uint8_t epd_bitmap_Fleche[] = {
 TinyGPSPlus OLED_OrientationFleches(TinyGPSPlus gps) {
   static int last=millis();
   gps=Obtain_GPS_Data(gps);
-  if (gps.time.isUpdated()) {//Le temps est la première donnée à être actualisée
-    SerialPrintUpdatedData(gps);
-  }
   if (millis() - last > 5000) {
-    if (gps.location.isValid()) {
+    if (gps.time.isUpdated()) {//Le temps est la première donnée à être actualisée
+      SerialPrintUpdatedData(gps);
+    }
+    if (gps.location.isUpdated()) {
       double distanceToTRESOR =
         TinyGPSPlus::distanceBetween(
           gps.location.lat(),

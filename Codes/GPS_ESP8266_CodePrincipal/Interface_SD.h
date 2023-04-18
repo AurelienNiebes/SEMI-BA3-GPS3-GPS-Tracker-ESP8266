@@ -12,7 +12,7 @@
     String description;
   };
   
-  void SD_Init(int chipSelect);
+  bool SD_Init(int chipSelect);
   void CreateFileWithHeader(String PathFileName, String Header);
   String GPSFormat(TinyGPSPlus gps);
   void WritePath(String Data, String PathFileName);

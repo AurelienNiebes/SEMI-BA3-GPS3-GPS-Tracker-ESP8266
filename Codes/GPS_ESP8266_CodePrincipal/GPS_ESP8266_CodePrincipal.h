@@ -27,7 +27,7 @@ void SD_LectureFichiers();
 void SD_SuppressionFichiers();
 
 // Chasse au trésor distance
-TinyGPSPlus OLED_DistanceChaudFroid(TinyGPSPlus gps);
+TinyGPSPlus OLED_DistanceChaudFroid_Jauge(TinyGPSPlus gps);
 
 //Chasse au trésor orientation
 TinyGPSPlus OLED_OrientationFleches(TinyGPSPlus gps);
