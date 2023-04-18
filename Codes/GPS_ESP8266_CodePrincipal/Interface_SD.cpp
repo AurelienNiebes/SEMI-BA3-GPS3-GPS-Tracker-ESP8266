@@ -1,13 +1,13 @@
 #include "Interface_SD.h"
 
-void SD_Init(int chipSelect) {
+bool SD_Init(int chipSelect) {
   Serial.print(F("Initializing SD card..."));
   if (!SD.begin(chipSelect)) {
     Serial.println(F("initialization failed!"));
-    while (1)
-      ;
+    return false;
   } else {
     Serial.println(F("initialization done."));
+    return true;
   }
 }
 void CreateFileWithHeader(String PathFileName, String Header){
