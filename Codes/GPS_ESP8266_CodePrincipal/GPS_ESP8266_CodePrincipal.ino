@@ -70,7 +70,7 @@ void loop() {
       break;
 
     case 6:
-      gps = OLED_DistanceChaudFroid_Jauge(gps);
+      gps = OLED_DistanceChaudFroid_Jauge_et_Fleche(gps);
       break;
 
     case 7:

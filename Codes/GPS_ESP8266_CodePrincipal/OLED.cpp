@@ -19,6 +19,8 @@ void OLED_PrintDistance(int x, int y, double distance) {
   static double PrecDistance = -1;
   if (PrecDistance > 0) {
     display.setCursor(x, y);
+    display.setTextSize(1);
+    display.setTextColor(WHITE);
     if (PrecDistance > distance) {
       Serial.println(F("Vous chauffez"));
       display.print("Vous chauffez");
@@ -37,18 +39,18 @@ void OLED_PrintDistance(int x, int y, double distance) {
   //Serial.println(PrecDistance);
 }
 const int hmax=SCREEN_HEIGHT-25;
-void OLED_DrawJauge(double distance){
+void OLED_DrawJauge(int xmin, int largeur, double distance){
   int h = map(distance, 0, 4000, hmax, 0); //4km distance max
   h = max(h, 0);
-  display.drawRect(49, 0, 30, hmax, WHITE);
-  display.fillRect(49,hmax-h, 30, h, WHITE); //rectangle à remplir selon la distance
+  display.drawRect(xmin, 0, largeur, hmax, WHITE);
+  display.fillRect(xmin,hmax-h, largeur, h, WHITE); //rectangle à remplir selon la distance
   //Serial.println(h);
 }
 #define DEG2RAD 0.0174532925
 void drawRotatedBitmap(int16_t x, int16_t y, const uint8_t *bitmap, uint16_t angle) {
   //x, y: Les coordonées du centre de l'image ?
   uint8_t w = pgm_read_byte(bitmap++);  //Lit le premier nombre du bitmap(la largeur)
-  uint8_t h = pgm_read_byte(bitmap++);  //Lit le second nombre du bitmap(la largeur)
+  uint8_t h = pgm_read_byte(bitmap++);  //Lit le second nombre du bitmap(la hauteur)
 
   int16_t newx, newy;
   uint8_t data = 0;
