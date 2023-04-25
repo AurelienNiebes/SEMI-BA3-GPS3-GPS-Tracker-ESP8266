@@ -25,6 +25,9 @@ void SD_Init(int chipSelect) {
 
 void setup() {
   Serial_init(BaudRate);
+  delay(3000);
+  Serial.print("Attention !");
+  delay(3000);
   SD_Init(chipSelect);
 
 }

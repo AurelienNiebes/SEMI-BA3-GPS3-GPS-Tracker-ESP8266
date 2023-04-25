@@ -33,6 +33,7 @@ TinyGPSPlus SD_SauvegardeDonneesGPS(TinyGPSPlus gps, String PathFileName) {
 
 // Lecture des fichiers sur la carte SD
 void SD_LectureFichiers() {
+  
 }
 
 // Suppression des fichiers sur la carte SD
@@ -74,7 +75,7 @@ TinyGPSPlus OLED_DistanceChaudFroid_Jauge_et_Fleche(TinyGPSPlus gps) {
   static int last=millis();
   gps=Obtain_GPS_Data(gps);
   if (millis() - last > 1000) {
-    if (gps.time.isUpdated()) {//Le temps est la première donnée à être actualisée
+    if (gps.location.isUpdated()) {//Le temps est la première donnée à être actualisée
       SerialPrintUpdatedData(gps);
     }
     if (gps.location.isUpdated()&&gps.location.isValid()) {

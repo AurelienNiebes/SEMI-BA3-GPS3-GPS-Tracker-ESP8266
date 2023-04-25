@@ -122,7 +122,7 @@ WayPoint ReadWaypoints(String WaypointsFileName) {
         if(WaypointsFile.findUntil("\t","\n")){
           String nom=WaypointsFile.readStringUntil('\t');
           Etape.nom=nom;
-          String description = WaypointsFile.readStringUntil('\t');
+          String description = WaypointsFile.readStringUntil('\n');
           Etape.description=description;
         }
       }

@@ -3,7 +3,7 @@
 #include <ESP8266WiFi.h>
 
 TinyGPSPlus gps;
-SoftwareSerial SerialGPS(12, 14); //RX TX
+SoftwareSerial SerialGPS(D4, D3); //RX TX
 
 const char* ssid = "GPS_Test"; //nom du réseau wifi
 const char* password = "12345678"; //mot de passe wifi

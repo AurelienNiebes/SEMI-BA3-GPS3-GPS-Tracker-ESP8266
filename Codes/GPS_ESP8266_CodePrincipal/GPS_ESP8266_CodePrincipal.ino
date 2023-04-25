@@ -12,7 +12,8 @@ TinyGPSPlus gps;
 std::list<WayPoint> Etapes;
 
 bool SDConnecte = false;
-int choix = 6;  //switch
+bool EtapesLues=false;
+int choix = 4;  //switch
 void setup() {
   Serial_init(SerialBaud);
   GPS_Init(GPSBaud);
@@ -29,16 +30,28 @@ void setup() {
 
         if (header.equals("type	latitude	longitude	name	desc")) {
           Serial.println(F("Fichier d'étapes trouvé et valide"));
+          EtapesLues=true;
         } else {
           Serial.println(F("Fichier d'étapes non valide"));
+          OLED_Clear();
+          OLED_Print(20, 32, "Fichier d'etapes non valide.\nChargement de l\'etape par defaut...");
+          OLED_Display();
         }
       } else {
         Serial.println(F("Fichier d'étapes non trouvé"));
+        OLED_Clear();
+        OLED_Print(20, 32, "Fichier d'etapes inexistant.\nChargement de l\'etape par defaut...");
+        OLED_Display();
       }
     }
     if (!SD.exists(PathFileName)) {
       CreateFileWithHeader(PathFileName, F("Latitude, Longitude, Altitude, Time"));
     }
+  }
+  else{
+    OLED_Clear();
+    OLED_Print(20, 32, "Lecteur SD defaillant.\nChargement de l\'etape par defaut...\n(Le chemin suivi ne sera pas sauvegarde)");
+    OLED_Display();
   }
 }
 
@@ -50,23 +63,48 @@ void loop() {
   }
   switch (choix) {
     case 1:
+      OLED_Clear();
+      OLED_Display();
       gps = GPS_Communication(gps);
       break;
 
     case 2:
+      OLED_Clear();
+      OLED_Display();
       Wifi_Google_Maps();
       break;
 
     case 3:
-      gps = SD_SauvegardeDonneesGPS(gps, PathFileName);
+      if(SDConnecte){
+        gps = SD_SauvegardeDonneesGPS(gps, PathFileName);
+      }
+      else{
+        OLED_Clear();
+        OLED_Print(20, 32, "Le programme ne peut etre execute");
+        OLED_Display();
+      }
       break;
 
     case 4:
-      SD_LectureFichiers();
+      if(SDConnecte){
+        SD_LectureFichiers();
+      }
+      else{
+        OLED_Clear();
+        OLED_Print(20, 32, "Le programme ne peut etre execute");
+        OLED_Display();
+      }
       break;
 
     case 5:
-      SD_SuppressionFichiers();
+      if(SDConnecte){
+        SD_SuppressionFichiers();
+      }
+      else{
+        OLED_Clear();
+        OLED_Print(20, 32, "Le programme ne peut etre execute");
+        OLED_Display();
+      }
       break;
 
     case 6:
