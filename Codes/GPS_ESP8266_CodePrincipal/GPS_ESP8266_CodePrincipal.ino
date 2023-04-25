@@ -13,24 +13,35 @@ std::list<WayPoint> Etapes;
 
 bool SDConnecte = false;
 bool EtapesLues=false;
-int choix = 4;  //switch
+int choix = 6;  //switch
+const String HeaderAtt="type\tlatitude\tlongitude\tname\tdesc";
+int offset=0;
 void setup() {
   Serial_init(SerialBaud);
   GPS_Init(GPSBaud);
   OLED_Init();
+  delay(2000);
   SDConnecte = SD_Init(chipSelect);
   if (SDConnecte) {
     if (SD.exists(WaypointsFileName)) {
       File WaypointsFile = SD.open(WaypointsFileName, FILE_READ);
       if (WaypointsFile) {
         String header = WaypointsFile.readStringUntil('\n');
+        header=header.substring(3);
         Serial.println("Header:");
         Serial.println(header);
-        Serial.println();
+        Serial.println(header);
 
-        if (header.equals("type	latitude	longitude	name	desc")) {
+        for(int i=0; i<header.length();i++){
+          Serial.print(header[i]);
+          Serial.print(header[i]==HeaderAtt[i]);
+          Serial.println();
+        }
+
+        if (header.equals(HeaderAtt)) {
           Serial.println(F("Fichier d'étapes trouvé et valide"));
           EtapesLues=true;
+          offset=WaypointsFile.position();
         } else {
           Serial.println(F("Fichier d'étapes non valide"));
           OLED_Clear();
@@ -86,8 +97,8 @@ void loop() {
       break;
 
     case 4:
-      if(SDConnecte){
-        SD_LectureFichiers();
+      if(SDConnecte&&EtapesLues){
+        SD_LectureFichiers(WaypointsFileName, offset);
       }
       else{
         OLED_Clear();

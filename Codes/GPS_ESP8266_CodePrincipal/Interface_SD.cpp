@@ -102,10 +102,10 @@ void WritePath(String Data, String PathFileName) {
   PathFile.close();
   Serial.println();
 }
-WayPoint ReadWaypoints(String WaypointsFileName) {
+WayPoint ReadWaypoints(String WaypointsFileName, int initialOffset) {
   //TODO: A compléter et tester
   //type	latitude	longitude	name	desc
-  static int offset = 0;
+  static int offset = initialOffset;
   WayPoint Etape;
   File WaypointsFile = SD.open(WaypointsFileName, FILE_READ);  //Fichier avec les étapes à atteindre
   if (WaypointsFile) {
@@ -113,17 +113,35 @@ WayPoint ReadWaypoints(String WaypointsFileName) {
     WaypointsFile.seek(offset);
     if (WaypointsFile.available()) {  //TODO: Vérifier si il n'y a aucun problème avec la dernière ligne
       String type = WaypointsFile.readStringUntil('\t');
+      Serial.print("type: ");
+      Serial.println(type);
       //A compléter...
       if(type[0] == 'T'){
         String latitude = WaypointsFile.readStringUntil('\t');
+        Serial.print("latitude: ");
+        Serial.println(latitude);
         Etape.latitude=latitude.toFloat();
-        String longitude = WaypointsFile.readStringUntil('\t');
-        Etape.longitude = longitude.toFloat();
-        if(WaypointsFile.findUntil("\t","\n")){
-          String nom=WaypointsFile.readStringUntil('\t');
+        String longitude=WaypointsFile.readStringUntil('\n');
+        
+        if(longitude.indexOf('\t')!=-1){
+          String descEtNom = longitude.substring(longitude.indexOf('\t')+1);
+          longitude = longitude.substring(0,longitude.indexOf('\t'));
+          Serial.print("longitude: ");
+          Serial.println(longitude);
+          Etape.longitude = longitude.toFloat();
+          String nom=descEtNom.substring(0,descEtNom.indexOf('\t'));
+          Serial.print("nom: ");
+          Serial.println(nom);
           Etape.nom=nom;
-          String description = WaypointsFile.readStringUntil('\n');
+          String description = descEtNom.substring(descEtNom.indexOf('\t')+1);
+          Serial.print("description: ");
+          Serial.println(description);
           Etape.description=description;
+        }
+        else{
+          Serial.print("longitude: ");
+          Serial.println(longitude);
+          Etape.longitude = longitude.toFloat();
         }
       }
       else{

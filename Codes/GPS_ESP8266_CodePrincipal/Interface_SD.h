@@ -17,5 +17,5 @@
   String GPSFormat(TinyGPSPlus gps);
   void WritePath(String Data, String PathFileName);
   //Lit le fichier avec les étapes pour récupérer la prochaine étape
-  WayPoint ReadWaypoints(String WaypointsFileName);
+  WayPoint ReadWaypoints(String WaypointsFileName, int initialOffset);
 #endif

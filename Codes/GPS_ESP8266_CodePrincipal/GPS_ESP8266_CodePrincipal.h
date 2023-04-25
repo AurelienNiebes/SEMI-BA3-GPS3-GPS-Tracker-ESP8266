@@ -21,7 +21,7 @@ void Wifi_Google_Maps();
 TinyGPSPlus SD_SauvegardeDonneesGPS(TinyGPSPlus gps, String PathFileName);
 
 // Lecture des fichiers sur la carte SD
-void SD_LectureFichiers();
+void SD_LectureFichiers(String WaypointsFileName, int offset);
 
 // Suppression des fichiers sur la carte SD
 void SD_SuppressionFichiers();

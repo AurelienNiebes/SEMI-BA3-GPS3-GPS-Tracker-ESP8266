@@ -8,6 +8,8 @@ void Serial_init(int BaudRate) {
   }
   Serial.println("Communication serie initialisee");
 }
+const double TRESOR_LAT = 50.45405, TRESOR_LON = 3.949944;  //Coordonnées du trésor(ici, le Beffroi de Mons)
+WayPoint Tresor = {50.45405,3.949944,"Beffroi","Le plus haut point de Mons"};
 // Communication avec le GPS
 TinyGPSPlus GPS_Communication(TinyGPSPlus gps) {
   gps=Obtain_GPS_Data(gps);
@@ -32,8 +34,15 @@ TinyGPSPlus SD_SauvegardeDonneesGPS(TinyGPSPlus gps, String PathFileName) {
 }
 
 // Lecture des fichiers sur la carte SD
-void SD_LectureFichiers() {
-  
+void SD_LectureFichiers(String WaypointsFileName, int offset) {
+  static WayPoint Tresor;
+  static int last=millis();
+  //gps=Obtain_GPS_Data(gps);
+  if (millis() - last > 1500) {
+    Tresor = ReadWaypoints(WaypointsFileName, offset);
+    Serial.println(Tresor.latitude);
+    last =millis();
+  }
 }
 
 // Suppression des fichiers sur la carte SD
@@ -69,7 +78,6 @@ const PROGMEM static uint8_t epd_bitmap_Fleche[] = {
 	0x0f, 0xf0, 0x0f, 0xf0, 0x0f, 0xf0, 0x0f, 0xf0, 0x0f, 0xf0, 0x0f, 0xf0, 0x0f, 0xf0, 0x0f, 0xf0, 
 	0x0f, 0xf0, 0x0f, 0xf0, 0x0f, 0xf0, 0x0f, 0xf0, 0x0f, 0xf0, 0x0f, 0xf0, 0x0f, 0xf0, 0x00, 0x00
 };
-const double TRESOR_LAT = 50.45405, TRESOR_LON = 3.949944;  //Coordonnées du trésor(ici, le Beffroi de Mons)
 // Chasse au trésor distance
 TinyGPSPlus OLED_DistanceChaudFroid_Jauge_et_Fleche(TinyGPSPlus gps) {
   static int last=millis();
@@ -81,11 +89,11 @@ TinyGPSPlus OLED_DistanceChaudFroid_Jauge_et_Fleche(TinyGPSPlus gps) {
     if (gps.location.isUpdated()&&gps.location.isValid()) {
       double distanceToTRESOR = TinyGPSPlus::distanceBetween(
           gps.location.lat(), gps.location.lng(),
-          TRESOR_LAT, TRESOR_LON);
+          Tresor.latitude, Tresor.longitude);
 
       double courseToTRESOR = TinyGPSPlus::courseTo(
           gps.location.lat(), gps.location.lng(),
-          TRESOR_LAT, TRESOR_LON);
+          Tresor.latitude, Tresor.longitude);
 
       Serial.print(F("TRESOR     Distance="));
       Serial.print(distanceToTRESOR / 1000, 6);
@@ -96,6 +104,7 @@ TinyGPSPlus OLED_DistanceChaudFroid_Jauge_et_Fleche(TinyGPSPlus gps) {
       Serial.println(F("]"));
 
       OLED_Clear();
+      OLED_Print(35, 0, Tresor.nom);
       OLED_PrintDistance(0,54,distanceToTRESOR);
       OLED_DrawJauge(5,25,distanceToTRESOR);
       drawRotatedBitmap(100, 28, epd_bitmap_Fleche, (uint16_t)courseToTRESOR);

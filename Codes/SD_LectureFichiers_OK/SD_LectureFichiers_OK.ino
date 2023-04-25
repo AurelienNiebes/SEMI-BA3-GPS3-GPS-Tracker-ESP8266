@@ -5,7 +5,7 @@ String buffer;
 String filename = "GPS_Waypoints";
 
 const int chipSelect = D8;
-const int BaudRate = 115200;
+const int BaudRate = 9600;
 
 void Serial_init(int BaudRate) {
   Serial.begin(BaudRate);
@@ -25,10 +25,24 @@ void SD_Init(int chipSelect) {
 
 void setup() {
   Serial_init(BaudRate);
+  /*Serial.begin(BaudRate);
+  while (!Serial) {
+  }
+  Serial.println("Communication serie initialisee");*/
+  
+  Serial.print("Debut !");
   delay(3000);
   Serial.print("Attention !");
   delay(3000);
   SD_Init(chipSelect);
+  /*Serial.print("Initializing SD card...");
+  if (!SD.begin(chipSelect)) {
+    Serial.println("initialization failed!");
+    while(true);
+    return;
+  }
+
+  Serial.println("initialization done.");*/
 
 }
 void loop() {  
