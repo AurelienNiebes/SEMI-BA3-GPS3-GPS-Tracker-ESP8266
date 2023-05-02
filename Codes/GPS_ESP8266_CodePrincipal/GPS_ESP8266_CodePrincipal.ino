@@ -16,11 +16,16 @@ bool EtapesLues=false;
 int choix = 6;  //switch
 const String HeaderAtt="type\tlatitude\tlongitude\tname\tdesc";
 int offset=0;
+
 void setup() {
   Serial_init(SerialBaud);
   GPS_Init(GPSBaud);
   OLED_Init();
+
+  OLED_Display();
+
   delay(2000);
+  OLED_Clear();
   SDConnecte = SD_Init(chipSelect);
   if (SDConnecte) {
     if (SD.exists(WaypointsFileName)) {
@@ -42,17 +47,20 @@ void setup() {
           Serial.println(F("Fichier d'étapes trouvé et valide"));
           EtapesLues=true;
           offset=WaypointsFile.position();
+          PremiereEtape(WaypointsFileName, offset);
         } else {
           Serial.println(F("Fichier d'étapes non valide"));
           OLED_Clear();
           OLED_Print(20, 32, "Fichier d'etapes non valide.\nChargement de l\'etape par defaut...");
           OLED_Display();
+          delay(4000);
         }
       } else {
         Serial.println(F("Fichier d'étapes non trouvé"));
         OLED_Clear();
         OLED_Print(20, 32, "Fichier d'etapes inexistant.\nChargement de l\'etape par defaut...");
         OLED_Display();
+        delay(4000);
       }
     }
     if (!SD.exists(PathFileName)) {
@@ -60,9 +68,13 @@ void setup() {
     }
   }
   else{
+    Serial.println(F("Lecteur SD defaillant"));
     OLED_Clear();
-    OLED_Print(20, 32, "Lecteur SD defaillant.\nChargement de l\'etape par defaut...\n(Le chemin suivi ne sera pas sauvegarde)");
+    OLED_Print(2, 8, "Lecteur SD defaillant");
+    OLED_Print(2, 20, "Chargement de l\'etape par defaut...");
+    OLED_Print(4, 38, "(Le chemin suivi ne sera pas sauvegarde)");
     OLED_Display();
+    delay(10000);
   }
 }
 
@@ -90,8 +102,9 @@ void loop() {
         gps = SD_SauvegardeDonneesGPS(gps, PathFileName);
       }
       else{
+        Serial.println(F("Le programme ne peut etre execute"));
         OLED_Clear();
-        OLED_Print(20, 32, "Le programme ne peut etre execute");
+        OLED_Print(6, 24, "Le programme ne peut etre execute");
         OLED_Display();
       }
       break;
@@ -101,25 +114,15 @@ void loop() {
         SD_LectureFichiers(WaypointsFileName, offset);
       }
       else{
+        Serial.println(F("Le programme ne peut etre execute"));
         OLED_Clear();
-        OLED_Print(20, 32, "Le programme ne peut etre execute");
-        OLED_Display();
-      }
-      break;
-
-    case 5:
-      if(SDConnecte){
-        SD_SuppressionFichiers();
-      }
-      else{
-        OLED_Clear();
-        OLED_Print(20, 32, "Le programme ne peut etre execute");
+        OLED_Print(6, 24, "Le programme ne peut etre execute");
         OLED_Display();
       }
       break;
 
     case 6:
-      gps = OLED_DistanceChaudFroid_Jauge_et_Fleche(gps);
+      gps = OLED_DistanceChaudFroid_Jauge_et_Fleche(gps, WaypointsFileName, PathFileName, offset, EtapesLues, SDConnecte);
       break;
 
     case 7:

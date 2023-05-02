@@ -150,8 +150,9 @@ WayPoint ReadWaypoints(String WaypointsFileName, int initialOffset) {
 
       offset = WaypointsFile.position();
     } else {
-      //TODO: indiquer que le fichier est vide
       Serial.println(F("Dernière étape atteinte !"));
+      Etape.longitude=-1;
+      Etape.latitude=-1;
     }
     WaypointsFile.close();
   } else {

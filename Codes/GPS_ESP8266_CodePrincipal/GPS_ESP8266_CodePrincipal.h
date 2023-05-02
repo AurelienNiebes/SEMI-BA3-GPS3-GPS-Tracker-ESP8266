@@ -13,6 +13,7 @@
 void Serial_init(int BaudRate);
 // Communication avec le GPS
 TinyGPSPlus GPS_Communication(TinyGPSPlus gps);
+void PremiereEtape(String WaypointsFileName,int offset);
 
 // Google Maps
 void Wifi_Google_Maps();
@@ -23,11 +24,8 @@ TinyGPSPlus SD_SauvegardeDonneesGPS(TinyGPSPlus gps, String PathFileName);
 // Lecture des fichiers sur la carte SD
 void SD_LectureFichiers(String WaypointsFileName, int offset);
 
-// Suppression des fichiers sur la carte SD
-void SD_SuppressionFichiers();
-
 // Chasse au trésor distance
-TinyGPSPlus OLED_DistanceChaudFroid_Jauge_et_Fleche(TinyGPSPlus gps);
+TinyGPSPlus OLED_DistanceChaudFroid_Jauge_et_Fleche(TinyGPSPlus gps,String WaypointsFileName, String PathFileName, int offset, boolean EtapesLues, boolean SDConnecte);
 
 //Chasse au trésor orientation
 TinyGPSPlus OLED_OrientationFleches(TinyGPSPlus gps);

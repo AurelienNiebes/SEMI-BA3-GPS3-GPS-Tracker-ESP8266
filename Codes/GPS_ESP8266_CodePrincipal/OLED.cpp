@@ -10,7 +10,8 @@ void OLED_Init() {
     for (;;)
       ;
   } else {
-    display.clearDisplay();
+    display.setTextSize(1);
+    display.setTextColor(WHITE);
   }
 }
 void OLED_Clear(){display.clearDisplay();}
