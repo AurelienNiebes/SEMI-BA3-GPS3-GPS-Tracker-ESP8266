@@ -46,8 +46,8 @@ String GPSFormat(TinyGPSPlus gps){
     day = gps.date.day();
     year = gps.date.year();
     Date = year + "-" + month + "-" + day;
-    Serial.print("Date: ");
-    Serial.println(Date);
+    /*Serial.print("Date: ");
+    Serial.println(Date);*/
   }
   else{
     Serial.println("Date Not Available");
@@ -71,15 +71,15 @@ String GPSFormat(TinyGPSPlus gps){
     second += String(gps.time.second());
     
     Time = hour + ":" + minute + ":" + second;
-    Serial.print("Time: ");
-    Serial.println(Time);
+    /*Serial.print("Time: ");
+    Serial.println(Time);*/
   }
   else{
     Serial.println("Time Not Available");
     Time="";
   }
   Data = Latitude + "," + Longitude + "," + Altitude + "," + Date + " " + Time;
-  Serial.println("Data: "+Data);
+  //Serial.println("Data: "+Data);
   return Data;  
 }
 
@@ -91,16 +91,16 @@ void WritePath(String Data, String PathFileName) {
 
   if (PathFile) {
     Serial.print(F("GPS logging to "));
-    Serial.println(PathFileName);
-    Serial.println(Data);
+    Serial.print(PathFileName);
+    //Serial.println(Data);
     PathFile.println(Data);  // pass the ‘Data’ variable inside it to be written on the .txt file
-    Serial.println(F("done."));
+    Serial.println(F(" done."));
   } else {
     Serial.print(F("error opening "));
     Serial.println(PathFileName);
   }
   PathFile.close();
-  Serial.println();
+  //Serial.println();
 }
 WayPoint ReadWaypoints(String WaypointsFileName, int initialOffset) {
   //TODO: A compléter et tester
@@ -113,9 +113,8 @@ WayPoint ReadWaypoints(String WaypointsFileName, int initialOffset) {
     WaypointsFile.seek(offset);
     if (WaypointsFile.available()) {  //TODO: Vérifier si il n'y a aucun problème avec la dernière ligne
       String type = WaypointsFile.readStringUntil('\t');
-      Serial.print("type: ");
-      Serial.println(type);
-      //A compléter...
+      /*Serial.print("type: ");
+      Serial.println(type);*/
       if(type[0] == 'T'){
         String latitude = WaypointsFile.readStringUntil('\t');
         Serial.print("latitude: ");

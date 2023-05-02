@@ -1,11 +1,8 @@
 ﻿type	latitude	longitude	name	desc
 T	50.4578458	3.9376438	1	Lotto Mons Expo
 T	50.4576967	3.9455938	2	Sur les rails
-T	50.4576148	3.9539194	3	Place du Parc
-T	50.4576148	3.9579105	4	Cours de Justice
-T	50.4576004	3.9604640	5	Boulevard Kennedy
-T	50.4576550	3.9628887	6	CHU Ambroise Paré
-T	50.4575594	3.9659572	7
-T	50.4575184	3.9695835	8	Centre Sportif Charles Sandron
-T	50.4574228	3.9738107	9	Clos Fernand Debouck
+T	50.4581118	3.9524388	3	Place du Parc
+T	50.4584123	3.9586401	4	Tour Valenciennoise
+T	50.4584327	3.9632320	5	Ursulines
+T	50.4584058	3.9765626	6	Intermarché
 

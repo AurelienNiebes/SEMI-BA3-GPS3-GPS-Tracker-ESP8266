@@ -12,12 +12,12 @@ TinyGPSPlus Obtain_GPS_Data(TinyGPSPlus gps) {
   while (SerialGPS.available() > 0) {
     gps.encode(SerialGPS.read());
   }
-  if ((millis() - last) > 5000 && gps.charsProcessed() < 10)  //if there is no GPS data detected after 5s then the serial monitor will display “GPS NOT DETECTED!” message.
+  /*if ((millis() - last) > 5000 && gps.charsProcessed() < 10)  //if there is no GPS data detected after 5s then the serial monitor will display “GPS NOT DETECTED!” message.
   {
     Serial.println(F("GPS NOT DETECTED!"));
     //while(true);
     last = millis();
-  }
+  }*/
   return gps;
 }
 void SerialPrintUpdatedData(TinyGPSPlus gps) {

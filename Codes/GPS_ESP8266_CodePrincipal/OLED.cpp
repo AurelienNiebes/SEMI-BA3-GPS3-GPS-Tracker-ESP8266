@@ -30,7 +30,7 @@ void OLED_PrintDistance(int x, int y, double distance) {
       Serial.println(F("Vous vous éloignez"));
       display.print("Vous vous eloignez");
     } else {
-      Serial.println(F("Bougez svp"));
+      //Serial.println(F("Bougez svp"));
       display.print("Bougez svp");
       /*display.printf(const char *format, ...)
       display.printf()*/
