@@ -1,0 +1,35 @@
+[PROJECT]
+Target=Scan_Cap_887.HEX
+Development_Mode=2
+Processor=0x887F
+ToolSuite=CCS
+
+[Directories]
+Include=
+Library=
+LinkerScript=
+
+[Target Data]
+FileList=Scan_Cap_887.c;
+BuildTool=C-COMPILER
+OptionString=+FM
+AdditionalOptionString=
+BuildRequired=1
+
+[Scan_Cap_887.c]
+Type=4
+Path=
+FileList=
+BuildTool=
+OptionString=
+AdditionalOptionString=
+
+[mru-list]
+1=D:\FICHIE~1\DataPic\SCANNI~2\SCAN_C~2.C
+
+[Windows]
+0=0000 D:\FICHIE~1\DataPic\SCANNI~2\SCAN_C~2.C 0 0 796 451 3 0
+
+[Units]
+Count=1
+1=Scan_Cap_887.c (main)
