@@ -17,6 +17,7 @@ void OLED_Init() {
 void OLED_Clear(){display.clearDisplay();}
 void OLED_Display(){display.display();}
 void OLED_Print(int x, int y, String text){display.setCursor(x,y);display.print(text);}
+void OLED_TextSize(int size){display.setTextSize(size);}
 void OLED_PrintDistance(int x, int y, double distance) {
   static double PrecDistance = -1;
   if (PrecDistance > 0) {

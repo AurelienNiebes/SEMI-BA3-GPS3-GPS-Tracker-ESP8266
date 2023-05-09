@@ -35,6 +35,7 @@ void setup() {
   OLED_Init();
 
   OLED_Display();
+  
   delay(2000);
   drawRotatedBitmap(63, 45 , Cup, 0);
   OLED_Display();
@@ -49,11 +50,11 @@ void setup() {
         Serial.println(header);
         Serial.println(header);
 
-        for(int i=0; i<header.length();i++){
+        /*for(int i=0; i<header.length();i++){
           Serial.print(header[i]);
           Serial.print(header[i]==HeaderAtt[i]);
           Serial.println();
-        }
+        }*/
 
         if (header.equals(HeaderAtt)) {
           Serial.println(F("Fichier d'étapes trouvé et valide"));
@@ -65,14 +66,14 @@ void setup() {
           OLED_Clear();
           OLED_Print(20, 32, "Fichier d'etapes non valide.\nChargement de l\'etape par defaut...");
           OLED_Display();
-          delay(4000);
+          delay(5000);
         }
       } else {
         Serial.println(F("Fichier d'étapes non trouvé"));
         OLED_Clear();
         OLED_Print(20, 32, "Fichier d'etapes inexistant.\nChargement de l\'etape par defaut...");
         OLED_Display();
-        delay(4000);
+        delay(5000);
       }
     }
     if (!SD.exists(PathFileName)) {
@@ -86,8 +87,10 @@ void setup() {
     OLED_Print(2, 20, "Chargement de l\'etape par defaut...");
     OLED_Print(4, 38, "(Le chemin suivi ne sera pas sauvegarde)");
     OLED_Display();
-    delay(10000);
+    delay(5000);
   }
+  OLED_Clear();
+  OLED_Display();
 }
 
 void loop() {
@@ -101,12 +104,6 @@ void loop() {
       OLED_Clear();
       OLED_Display();
       gps = GPS_Communication(gps);
-      break;
-
-    case 2:
-      OLED_Clear();
-      OLED_Display();
-      Wifi_Google_Maps();
       break;
 
     case 3:
@@ -135,10 +132,6 @@ void loop() {
 
     case 6:
       gps = OLED_DistanceChaudFroid_Jauge_et_Fleche(gps, WaypointsFileName, PathFileName, offset, EtapesLues, SDConnecte);
-      break;
-
-    case 7:
-      gps = OLED_OrientationFleches(gps);
       break;
 
     default:
