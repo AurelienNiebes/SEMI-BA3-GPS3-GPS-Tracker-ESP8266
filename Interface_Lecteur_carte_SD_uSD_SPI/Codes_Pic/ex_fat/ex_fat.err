@@ -1,3 +1,0 @@
->>> Warning 202 "ex_fat.c" Line 26(5,8): Variable never used:   rs232_errors
-      Memory usage:   ROM=84%      RAM=68% - 88%
-      0 Errors,  1 Warnings.
