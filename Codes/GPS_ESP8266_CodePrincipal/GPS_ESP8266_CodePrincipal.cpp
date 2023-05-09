@@ -9,7 +9,6 @@ void Serial_init(int BaudRate) {
   Serial.println("Communication serie initialisee");
 }
 const double Seuil = 200;
-const double TRESOR_LAT = 50.45405, TRESOR_LON = 3.949944;  //Coordonnées du trésor(ici, le Beffroi de Mons)
 WayPoint Tresor = { 50.45405, 3.949944, "Beffroi", "Le plus haut point de Mons" };
 // Communication avec le GPS
 TinyGPSPlus GPS_Communication(TinyGPSPlus gps) {
@@ -53,7 +52,7 @@ TinyGPSPlus SD_SauvegardeDonneesGPS(TinyGPSPlus gps, String PathFileName) {
   return gps;
 }
 const unsigned char Cup[] PROGMEM = {
-  // 'cup-trophy-bit-pixel-graphics-icon-pixel-art-style-game-assets-bit-sprite-isolated-vector-illustration-eps-cup-trophy-bit-pixel-231952392, 50x55px
+  // 'cup-trophy-pixel, 50x55px
   32, 35,
   0x03, 0xff, 0xff, 0xc0, 0x03, 0xff, 0xff, 0xc0, 0x3e, 0x00, 0x00, 0xfc, 0x3f, 0x00, 0x00, 0xfc,
   0xc3, 0x00, 0x00, 0xc3, 0xc3, 0x00, 0x00, 0xc3, 0xc3, 0x00, 0x00, 0xc3, 0xc3, 0x00, 0x00, 0xc3,
@@ -204,7 +203,7 @@ TinyGPSPlus OLED_DistanceChaudFroid_Jauge_et_Fleche(TinyGPSPlus gps, String Wayp
         OLED_DrawJauge(5, 25, distanceToTRESOR);
         drawRotatedBitmap(100, 35, epd_bitmap_Fleche, (uint16_t)courseToTRESOR);
         OLED_TextSize(2);
-        OLED_Print(97, 5, "N");
+        OLED_Print(95, 4, "N");
         OLED_Display();
         OLED_TextSize(1);
         //Serial.println();
