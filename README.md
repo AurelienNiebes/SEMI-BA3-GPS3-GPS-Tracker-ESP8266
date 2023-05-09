@@ -2,6 +2,7 @@
 Un projet utilisant le capteur GPS
 
 ##Contacts
-*Ajouter nos e-mail secondaires* 
+Axelle Lambaere: axelle.lambaere@student.umons.ac.be
+Aurélien Niebes: aurelien.niebes@student.umons.ac.be
 ##Crédits
 *Créditer les tutoriels utilisés*
