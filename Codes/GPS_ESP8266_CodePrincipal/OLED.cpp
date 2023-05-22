@@ -43,7 +43,7 @@ void OLED_PrintDistance(int x, int y, double distance) {
 }
 const int hmax=SCREEN_HEIGHT-25;
 void OLED_DrawJauge(int xmin, int largeur, double distance){
-  int h = map(distance, 0, 4000, hmax, 0); //4km distance max
+  int h = map(distance, 0, 3000, hmax, 0); //4km distance max
   h = max(h, 0);
   display.drawRect(xmin, 0, largeur, hmax, WHITE);
   display.fillRect(xmin,hmax-h, largeur, h, WHITE); //rectangle à remplir selon la distance

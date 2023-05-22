@@ -27,8 +27,6 @@ void CreateFileWithHeader(String PathFileName, String Header){
 
 //Crée le String Data qui va être écris dans "GPS_Path.txt"
 String GPSFormat(TinyGPSPlus gps){
-  //TODO: Quand est-ce qu'on écrit dans le fichier ? Régulièrement ou que quand de nouvelles données sont dispos(.isUpdated())
-
   String Latitude, Longitude, Altitude, day, month, year, hour, minute, second, Date, Time;
   String Data;
   if (gps.location.isValid()){
@@ -103,7 +101,6 @@ void WritePath(String Data, String PathFileName) {
   //Serial.println();
 }
 WayPoint ReadWaypoints(String WaypointsFileName, int initialOffset) {
-  //TODO: A compléter et tester
   //type	latitude	longitude	name	desc
   static int offset = initialOffset;
   WayPoint Etape;
@@ -150,6 +147,7 @@ WayPoint ReadWaypoints(String WaypointsFileName, int initialOffset) {
       offset = WaypointsFile.position();
     } else {
       Serial.println(F("Dernière étape atteinte !"));
+      Etape.nom="Fin";
       Etape.longitude=-1;
       Etape.latitude=-1;
     }

@@ -76,9 +76,10 @@ void setup() {
         delay(5000);
       }
     }
-    if (!SD.exists(PathFileName)) {
-      CreateFileWithHeader(PathFileName, F("Latitude, Longitude, Altitude, Time"));
+    if (SD.exists(PathFileName)) {
+      SD.remove(PathFileName);
     }
+    CreateFileWithHeader(PathFileName, F("Latitude, Longitude, Altitude, Time"));
   }
   else{
     Serial.println(F("Lecteur SD defaillant"));
@@ -101,8 +102,6 @@ void loop() {
   }
   switch (choix) {
     case 1:
-      OLED_Clear();
-      OLED_Display();
       gps = GPS_Communication(gps);
       break;
 

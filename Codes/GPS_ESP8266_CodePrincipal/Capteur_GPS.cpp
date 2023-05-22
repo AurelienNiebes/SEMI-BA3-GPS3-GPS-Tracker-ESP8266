@@ -20,7 +20,7 @@ TinyGPSPlus Obtain_GPS_Data(TinyGPSPlus gps) {
   }*/
   return gps;
 }
-void SerialPrintUpdatedData(TinyGPSPlus gps) {
+TinyGPSPlus SerialPrintUpdatedData(TinyGPSPlus gps) {
   if (gps.location.isUpdated()) {
     if (gps.location.isValid()) {
       Serial.print(F("- latitude: "));
@@ -62,8 +62,6 @@ void SerialPrintUpdatedData(TinyGPSPlus gps) {
     Serial.print(gps.time.minute());
     Serial.print(F(":"));
     Serial.println(gps.time.second());
-  } else {
-    Serial.println(F("INVALID"));
   }
-  Serial.println();
+  return gps;
 }

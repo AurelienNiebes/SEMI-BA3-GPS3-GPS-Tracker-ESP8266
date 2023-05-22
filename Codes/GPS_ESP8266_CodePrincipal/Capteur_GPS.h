@@ -6,5 +6,5 @@
   #include <TinyGPSPlus.h>
   void GPS_Init(int GPSBaud);
   TinyGPSPlus Obtain_GPS_Data(TinyGPSPlus gps);
-  void SerialPrintUpdatedData(TinyGPSPlus gps);
+  TinyGPSPlus SerialPrintUpdatedData(TinyGPSPlus gps);
 #endif
